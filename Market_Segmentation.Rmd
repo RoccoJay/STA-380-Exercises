@@ -21,7 +21,7 @@ The other components should help differentiate them on more characteristics, how
 
 ```{r, include = FALSE}
 rm(list = ls())
-market = read.csv("C:/Users/pivo/Desktop/UT MSBA/Summer 2019/Predictive Models/STA380/data/social_marketing.csv", row.names=1)
+market = read.csv("social_marketing.csv", row.names=1)
 
 library(tidyr)
 library(mosaic)
