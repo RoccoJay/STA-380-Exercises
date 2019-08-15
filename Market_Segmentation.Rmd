@@ -6,12 +6,51 @@ output:
   md_document:
     variant: gfm
 ---
-
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
 # MARKET SEGMENTATION: 
 ## Analysis:
-In order to better understand NutrientH2O’s Twitter followers, we used Principal Component Analysis.  We removed the categories of ‘chatter’ and ‘uncategorized’ from our analysis because we believe that these categories do not provide enough information to be useful in market segmentation.  Next we normalized the data because we were interested in the percentage of Tweets not the overall number of Tweets in each category.  We ran PCA to obtain five principal components.  We examined the makeup, specifically the top four categories used, for each of these components. 
-	
-## Findings: 
+In order to better understand NutrientH20’s Twitter followers, Principal Component Analysis was used. Before running the algorithm, the Tweets under the ‘chatter’ and ‘uncategorized’ categories were removed as they do not provide any useful information for a market segmentation. Next, the data was normalized to use the percentage of Tweets not the overall number of Tweets in each category.  
+PCA was ran to obtain 5 principal components, as these explain 50% of the variance in the data, to understand the categories these people tweeted about and assign them to a client archetype.  
+ 
+ 
+## Findings new:
+The first component contained the categories ‘health nutrition’, ‘personal fitness’, ‘cooking’ and ‘outdoors’ as the top four ingredients, while XXXXX were the bottom ones. People that are high in this component tend to be health conscious people that are concerned with their fitness, this mean they are a great target for NutrientH20.
+The other components should help differentiate them on more characteristics, however there is little to no differentiation among the other components:  
+
+```{r, include = FALSE}
+rm(list = ls())
+market = read.csv("C:/Users/pivo/Desktop/UT MSBA/Summer 2019/Predictive Models/STA380/data/social_marketing.csv", row.names=1)
+
+library(tidyr)
+library(mosaic)
+library(dplyr)
+library(reshape2)
+library(ggplot2)
+```
+```{r, echo = FALSE}
+market <- cbind(market[,2:4],market[6:36])
+market_scale = market
+cormat <- round(cor(market), 2)
+melted_cormat <- melt(cormat)
+
+#market_scale = sweep(market, MARGIN = 1, FUN = '/', STATS = rowSums(market[,]))
+market_scale = market/rowSums(market)
+market_scale = scale(market_scale, center = TRUE, scale = FALSE)
+
+pc5 = prcomp(market_scale, scale=FALSE, rank=5)
+#plot(pc5)
+loadings = pc5$rotation
+scores = pc5$x
+#head(market_scale)
+pairs(scores)
+```
+
+
+
+
+## Findings old: 
 Our first component contained the categories "health_nutrition", "personal_fitness", "cooking", and "outdoors" as the top four ingredients.  We believe the people that are high in this component tend to be health conscious people that are active in the outdoors and concerned with their fitness.  These are the individuals that should be the primary focus of marketing.
 	
 The next component contained the categories "photo_sharing", “cooking", "shopping", and "fashion" as the top ingredients.  The people high in this component tend to be suburban people concerned with diets that are socially active and following fashion trends.
