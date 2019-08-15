@@ -15,7 +15,7 @@ In order to better understand NutrientH20’s Twitter followers, Principal Compo
  
  
 ## Findings new:
-The first component contained the categories ‘health nutrition’, ‘personal fitness’, ‘cooking’ and ‘outdoors’ as the top four ingredients, while XXXXX were the bottom ones. People that are high in this component tend to be health conscious people that are concerned with their fitness, this mean they are a great target for NutrientH20.
+The first component contained the categories ‘health nutrition’, ‘personal fitness’, ‘cooking’ and ‘outdoors’ as the top four ingredients, while 'travel', 'photo_sharing', 'college_uni', and 'politics' were the bottom ones. People that are high in this component tend to be health conscious people that are concerned with their fitness, which means they are a great target for NutrientH20.
 
 The other components should help differentiate them on more characteristics, however there is little to no differentiation among the other components:  
 
