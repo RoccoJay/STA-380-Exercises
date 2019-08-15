@@ -21,7 +21,7 @@ archetype.
 | PC2       | Photo Sharing, Cooking, Shopping, Fashion                  |
 | PC3       | College/University, Online Gaming, Sports Playing, TV/Film |
 
-According to these components, a couple archetypes emerged.
+According to these components, a few archetypes emerged.
 
 **1. The outdoorsy:** This segment corresponds to the followers that are
 high on component 1. They tend to be health conscious people that are
