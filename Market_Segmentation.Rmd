@@ -4,7 +4,7 @@ author: "Rocco Lange"
 date: "8/15/2019"
 output: 
   md_document:
-    variant: markdown_github
+    variant: gfm
 ---
 
 ```{r setup, include=FALSE}
