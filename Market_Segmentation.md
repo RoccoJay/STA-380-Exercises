@@ -7,23 +7,27 @@ Component Analysis was used. Before running the algorithm, the Tweets
 under the ‘chatter’ and ‘uncategorized’ categories were removed as they
 do not provide any useful information for a market segmentation. Next,
 the data was normalized to use the percentage of Tweets not the overall
-number of Tweets in each category.  
-PCA was ran to obtain 5 principal components, as these explain 50% of
-the variance in the data, to understand the categories these people
-tweeted about and assign them to a client archetype.
+number of Tweets in each category. PCA was run to obtain 5 principal
+components, as these explain 50% of the variance in the data, to
+understand the categories these people tweeted about and assign them to
+a client archetype.
 
-## Findings new:
+## Findings:
 
 The first component contained the categories ‘health nutrition’,
 ‘personal fitness’, ‘cooking’ and ‘outdoors’ as the top four
-ingredients, while XXXXX were the bottom ones. People that are high in
-this component tend to be health conscious people that are concerned
-with their fitness, this mean they are a great target for NutrientH20.
+ingredients, while ‘travel’, ‘photo\_sharing’, ‘college\_uni’, and
+‘politics’ were the bottom ones. People that are high in this
+component tend to be health conscious people that are concerned with
+their fitness, which means they are a great target for NutrientH20.
+
 The other components should help differentiate them on more
 characteristics, however there is little to no differentiation among the
 other components:
 
 ![](Market_Segmentation_files/figure-gfm/unnamed-chunk-2-1.png)<!-- -->
+
+# OLD
 
 ## Findings old:
 
