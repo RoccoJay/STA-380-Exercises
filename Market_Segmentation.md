@@ -12,7 +12,7 @@ components, as these explain 50% of the variance in the data, to
 understand the categories these people tweeted about and assign them to
 a client archetype.
 
-## Findings new:
+## Findings:
 
 The first component contained the categories ‘health nutrition’,
 ‘personal fitness’, ‘cooking’ and ‘outdoors’ as the top four
@@ -26,6 +26,8 @@ characteristics, however there is little to no differentiation among the
 other components:
 
 ![](Market_Segmentation_files/figure-gfm/unnamed-chunk-2-1.png)<!-- -->
+
+# OLD
 
 ## Findings old:
 
