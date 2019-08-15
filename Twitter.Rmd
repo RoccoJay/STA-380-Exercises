@@ -93,6 +93,6 @@ print(summary(pc5))
 ```
 
 ```{r}
-View(market_scale)
+
 ```
 
