@@ -26,8 +26,12 @@ ABIA$AUS[ABIA$Origin=="AUS"]="Departures"
 
 #Extracting Hour of Day info from time columns:
 ABIA$hour<-NA
-ABIA$hour[ABIA$Origin=="AUS"]=ceiling(ABIA$DepTime[ABIA$Origin=="AUS"]/100)
 ABIA$hour[ABIA$Dest=="AUS"]=ceiling(ABIA$ArrTime[ABIA$Dest=="AUS"]/100)
+ABIA$hour[ABIA$Origin=="AUS"]=ceiling(ABIA$DepTime[ABIA$Origin=="AUS"]/100)
+
+#Unifying the Departure and Arrival delays
+ABIA$delay[ABIA$Dest=="AUS"]=ABIA$ArrDelay[ABIA$Dest=="AUS"]
+ABIA$delay[ABIA$Origin=="AUS"]=ABIA$DepDelay[ABIA$Origin=="AUS"]
 ```
 
 
