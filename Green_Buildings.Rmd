@@ -46,7 +46,7 @@ ggplot(data = gb1, mapping = aes(x=gb1$class_type, y=..prop.., fill=gb1$green_ra
 
 This could be a factor in the mean rent for green buildings being higher than the mean rent for non-green buildings.  Class A buildings were found to have a mean rent of $32.32, which was nearly $6 higher than Class B and almost $9 more than Class C. 
 
-```{r}
+```{r, echo=FALSE}
 gb1 %>% 
 group_by(class_type) %>% 
 summarise(AverageRent = mean(Rent)) %>% 
@@ -64,7 +64,7 @@ summarise(AverageRent = mean(Rent)) %>%
 
 This suggests that since green buildings are represented by a higher proportion of Class A buildings their mean rent is distorted.  Even though for each class, except C, they are actually cheaper than non-green buildings.
 
-```{r}
+```{r, echo=FALSE}
 gb1 %>% 
 group_by(class_type, green_rating) %>% 
 summarise(AverageRent = mean(Rent)) %>% 
