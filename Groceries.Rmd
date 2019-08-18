@@ -11,7 +11,34 @@ output:
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-```{r}
+```{r, include=FALSE}
+library(arules)
+```
 
+```{r, include=FALSE}
+groceries = read.transactions("groceries.txt", sep = ",")
+summary(groceries)
+```
+```{r, include=FALSE}
+inspect(groceries[1:5])
+```
+```{r, include=FALSE}
+groceryrules = apriori(groceries, 
+	parameter=list(support=.005, confidence=.1, maxlen=5))
+```
+
+```{r}
+# inspect(subset(groceryrules, subset=confidence > 0.6))
+inspect(sort(subset(groceryrules, subset=lift > 2 & confidence > 0.1), by = "lift")[1:10])
+
+```
+```{r}
+sub_rules <- groceryrules[quality(groceryrules)$confidence>0.1] 
+top10_sub_rules <- head(sub_rules, n=10, by = "lift")
+plot(top10_sub_rules, method = "graph", engine = "htmlwidget")
+```
+
+```{r}
+plot(sort(groceryrules, by = "lift")[1:5], method = "graph", engine = "htmlwidget")
 ```
 
