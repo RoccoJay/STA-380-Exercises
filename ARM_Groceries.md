@@ -31,19 +31,20 @@ have very high betweeness.
 The top 10 rules with a confidence threshold of 0.4 in terms of lift
 are:
 
-|     rank | rules                                                              |     lift |
-| -------: | :----------------------------------------------------------------- | -------: |
-|        1 | {citrus fruit,other vegetables,whole milk} =\> {root vegetables}   | 4.085493 |
-|        2 | {herbs} =\> {root vegetables}                                      | 3.956477 |
-|        3 | {citrus fruit,pip fruit} =\> {tropical fruit}                      | 3.854060 |
-|        4 | {other vegetables,tropical fruit,whole milk} =\> {root vegetables} | 3.768074 |
-|        5 | {other vegetables,pip fruit,whole milk} =\> {root vegetables}      | 3.724961 |
-|        6 | {curd,tropical fruit} =\> {yogurt}                                 | 3.690645 |
-|        7 | {beef,other vegetables} =\> {root vegetables}                      | 3.688693 |
-|        8 | {fruit/vegetable juice,other vegetables,whole milk} =\> {yogurt}   | 3.479790 |
-|        9 | {root vegetables,tropical fruit,whole milk} =\> {yogurt}           | 3.401937 |
-|       10 | {citrus fruit,root vegetables,whole milk} =\> {other vegetables}   | 3.273165 |
-| \[\](ARM | \_Groceries\_files/figure-gfm/unnamed-chunk-10-1.png)<!-- -->      |          |
+| rank | rules                                                              |     lift |
+| ---: | :----------------------------------------------------------------- | -------: |
+|    1 | {citrus fruit,other vegetables,whole milk} =\> {root vegetables}   | 4.085493 |
+|    2 | {herbs} =\> {root vegetables}                                      | 3.956477 |
+|    3 | {citrus fruit,pip fruit} =\> {tropical fruit}                      | 3.854060 |
+|    4 | {other vegetables,tropical fruit,whole milk} =\> {root vegetables} | 3.768074 |
+|    5 | {other vegetables,pip fruit,whole milk} =\> {root vegetables}      | 3.724961 |
+|    6 | {curd,tropical fruit} =\> {yogurt}                                 | 3.690645 |
+|    7 | {beef,other vegetables} =\> {root vegetables}                      | 3.688693 |
+|    8 | {fruit/vegetable juice,other vegetables,whole milk} =\> {yogurt}   | 3.479790 |
+|    9 | {root vegetables,tropical fruit,whole milk} =\> {yogurt}           | 3.401937 |
+|   10 | {citrus fruit,root vegetables,whole milk} =\> {other vegetables}   | 3.273165 |
+
+![](ARM_Groceries_files/figure-gfm/unnamed-chunk-10-1.png)<!-- -->
 
 If we lower the confidence threshold to 0.1, the top 10 rules
 are:

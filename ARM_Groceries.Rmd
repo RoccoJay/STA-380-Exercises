@@ -79,6 +79,7 @@ top10_sub_rules_df$rank <- 1:10
 rownames(top10_sub_rules_df) <- NULL
 kable(select(top10_sub_rules_df, rank, rules, lift))
 ```
+
 ```{r, echo=FALSE}
 sub_rules <- groceryrules[quality(groceryrules)$confidence>0.4] 
 top10_sub_rules <- head(sub_rules, n=10, by = "lift")
