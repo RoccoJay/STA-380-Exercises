@@ -1,5 +1,5 @@
 ---
-title: "Green BUildings"
+title: "STA 380, Part 2: Exercises"
 author: "Rocco Lange, Pedro Ivo Rivas"
 date: "8/18/2019"
 output: 
@@ -11,6 +11,7 @@ output:
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+# GREEN BUILDINGS
 ```{r, include=FALSE}
 rm(list=ls())
 library(mosaic)
@@ -23,9 +24,6 @@ gb1$class_type = gb1$class_a*2 + gb1$class_b
 gb1$class_type = ifelse(gb1$class_type==0, "Class C", ifelse(gb1$class_type==1, "Class B", "Class A"))
 gb1$net = ifelse(gb1$net==1,"Utilities Paid","Utilities Not Paid")
 ```
-
-
-# GREEN BUILDINGS
 
 ## Green Buildings have higher Proportion of Class A buildings
 
@@ -80,4 +78,15 @@ summarise(AverageRent = mean(Rent)) %>%
 
 ## Conclusion
 
-In summary, the mean price for green buildings is distorted by other underlying factors such as class that make a direct impact on price whether they are green or not. Since there are different proportions of each class of building per green type, they are not comparable on green type alone.  
+In summary, the mean price for green buildings is distorted by other underlying factors such as class that make a direct impact on price whether they are green or not. Since there are different proportions of each class of building per green type, they are not comparable on green type alone. 
+
+
+# Flights at ABIA
+
+# Portfolio Modeling
+
+# Market Segmentation
+
+# Author Attribution
+
+# Association Rule Mining
