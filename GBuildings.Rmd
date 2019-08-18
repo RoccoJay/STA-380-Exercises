@@ -211,3 +211,109 @@ ggplot(data = gb1, mapping = aes(x=gb1$class_type, y=..prop.., fill=gb1$green_ra
   facet_wrap(~net)
 ```
 
+```{r}
+classa = subset(gb1, class_type == 'Class A')
+head(classa)
+classagreen = subset(classa, green_rating == 'Green')
+head(classagreen)
+mean(classagreen$Rent)
+classanongreen = subset(classa, green_rating == 'Non-Green')
+head(classanongreen)
+mean(classanongreen$Rent)
+```
+```{r}
+paid = subset(classa, net == 'Utilities Paid')
+head(paid)
+paidgreen = subset(paid, green_rating == 'Green')
+head(paidgreen)
+mean(paidgreen$Rent)
+paidnongreen = subset(paid, green_rating == 'Non-Green')
+head(paidnongreen)
+mean(paidnongreen$Rent)
+```
+```{r}
+nonpaid = subset(classa, net != 'Utilities Paid')
+head(nonpaid)
+nonpaidgreen = subset(nonpaid, green_rating == 'Green')
+head(nonpaidgreen)
+mean(nonpaidgreen$Rent)
+nonpaidnongreen = subset(nonpaid, green_rating == 'Non-Green')
+head(nonpaidnongreen)
+mean(nonpaidnongreen$Rent)
+```
+
+
+```{r}
+meanrentclass = data.frame("class"= c("Class A", "Class B", "Class C"), "mean"=c(32.32, 26.39, 23.94) )
+meanrentclass
+```
+```{r}
+ggplot(data = gb1, mapping = aes(x=gb1$class_type, y=gb1$Rent, fill=gb1$green_rating)) +
+  geom_bar(color='black', stat='summary', fun.y='mean', position = position_dodge()) +
+  scale_fill_manual(values=c("#32CD32", "#E69F00")) +
+  labs(title="Bar plot",
+       subtitle="Mean Rent by Class",
+       caption="Source: greenbuilding data set in R",
+       x="Class", y="Mean Rent (dollars)", fill="Green Rating") 
+
+
+```
+```{r}
+ggplot(data = gb1, mapping = aes(x=gb1$class_type, y=gb1$Rent, fill=gb1$green_rating)) +
+  geom_bar(color='black', stat='summary', fun.y='mean', position = position_dodge()) +
+  scale_fill_manual(values=c("#32CD32", "#E69F00")) +
+  labs(title="Bar plot",
+       subtitle="Mean Rent by Class",
+       caption="Source: greenbuilding data set in R",
+       x="Class", y="Mean Rent (dollars)", fill="Green Rating") + 
+  facet_grid(net~amenities)
+```
+```{r}
+gb1 %>% 
+group_by(class_type, green_rating) %>% 
+summarise(AverageRent = mean(Rent)) %>% 
+  ggplot(aes(factor(class_type), AverageRent, label=round(AverageRent, 2), group=green_rating, fill=factor(green_rating))) +
+  geom_col(position = position_dodge()) +
+  scale_fill_manual(values=c("#32CD32", "#E69F00")) +
+  geom_text(nudge_y = 0.5) +
+  facet_grid(~green_rating, scales = "free_x", space = "free_x") +
+  labs(title="Bar plot",
+       subtitle="Mean Rent by Class",
+       caption="Source: greenbuilding data set in R",
+       x="Class", y="Mean Rent (dollars)", fill="Green Rating")
+```
+```{r}
+gb1 %>% 
+group_by(class_type, green_rating) %>% 
+summarise(AverageRent = mean(Rent)) %>% 
+  ggplot(aes(factor(class_type), AverageRent, label=round(AverageRent, 2), fill=factor(green_rating))) +
+  geom_col(position = position_dodge(), color='black') +
+  scale_fill_manual(values=c("#32CD32", "#E69F00")) +
+  geom_text(position=position_dodge(width = 0.9),vjust = -0.3) +
+  labs(title="Bar plot",
+       subtitle="Mean Rent by Class",
+       caption="Source: greenbuilding data set in R",
+       x="Class", y="Mean Rent (dollars)", fill="Green Rating")
+  
+```
+
+```{r}
+gb1 %>% 
+group_by(class_type) %>% 
+summarise(AverageRent = mean(Rent))
+```
+
+```{r}
+gb1 %>% 
+group_by(class_type) %>% 
+summarise(AverageRent = mean(Rent)) %>% 
+  ggplot(aes(factor(class_type), AverageRent, label=round(AverageRent, 2), fill=factor(class_type))) +
+  geom_col(position = position_dodge(), color='black') +
+  scale_fill_manual(values=c("#4682B4", "#48D1CC", '#B22222')) +
+  geom_text(position=position_dodge(width = 0.9),vjust = -0.3) +
+  labs(title="Bar plot",
+       subtitle="Mean Rent by Class",
+       caption="Source: greenbuilding data set in R",
+       x="Class", y="Mean Rent (dollars)", fill="Class")
+```
+
