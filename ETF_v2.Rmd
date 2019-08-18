@@ -2,7 +2,9 @@
 title: "STA380"
 author: "SebastianOsorio"
 date: "12/8/2019"
-output: html_document
+output: 
+  md_document:
+    variant: gfm
 ---
 
 ```{r setup, include=FALSE}
