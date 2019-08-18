@@ -1,0 +1,70 @@
+---
+title: "Exercise 2: ABIA"
+author: "Sebastian Osorio, Robbie Geoghegan"
+date: "7/8/2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+#Visual story telling part 2: flights at ABIA
+
+
+```{r Data read}
+ABIA <- read.csv('ABIA.csv', header = TRUE)
+ABIA <- ABIA[,c("Month","DayofMonth","DayOfWeek","DepTime","CRSDepTime","ArrTime","CRSArrTime","UniqueCarrier", "ArrDelay","DepDelay","Origin","Dest","Cancelled","CancellationCode")]
+library(ggplot2)
+```
+
+
+```{r Data manipulation}
+#Unifying Arrivals and Departures for graphs:
+ABIA$AUS[ABIA$Dest=="AUS"]="Arrivals"
+ABIA$AUS[ABIA$Origin=="AUS"]="Departures"
+
+#Extracting Hour of Day info from time columns:
+ABIA$hour<-NA
+ABIA$hour[ABIA$Origin=="AUS"]=ceiling(ABIA$DepTime[ABIA$Origin=="AUS"]/100)
+ABIA$hour[ABIA$Dest=="AUS"]=ceiling(ABIA$ArrTime[ABIA$Dest=="AUS"]/100)
+```
+
+
+
+```{r Frequency Graphic: Hour of day vs Day of the Week}
+ABIA_dow <- na.omit(ABIA[,c("AUS","delay","hour", "DayOfWeek")])
+ABIA_hdxt <- xtabs(~hour + DayOfWeek + AUS, ABIA_dow)
+ABIA_hdxt <- as.data.frame.table(ABIA_hdxt)
+
+freqHD <- ggplot(ABIA_hdxt, aes(DayOfWeek, hour, fill = Freq)) + facet_grid(~AUS) + geom_tile() + ylab("Hour of the day") +xlab("Day of the Week") + ggtitle("Arrivals and Departures in Austin (Hour of the day / Day of the Week)") + scale_fill_gradient( trans="sqrt", low = "white", high="dark green")
+freqHD  + scale_y_discrete(limits=rev(levels(ABIA_tab$hour)))
+```
+
+
+```{r Frequency Graphic: Hour of day vs Month}
+ABIA_hm <- na.omit(ABIA[,c("AUS","delay","hour", "Month")])
+ABIA_hmxt <- xtabs(~hour + Month + AUS, ABIA_hm)
+ABIA_hmxt <- as.data.frame.table(ABIA_hmxt)
+
+freqHM <- ggplot(ABIA_hmxt, aes(Month, hour, fill = Freq)) + facet_grid(~AUS) + geom_tile() + ylab("Hour of the day") +xlab("Month") + ggtitle("Arrivals and Departures in Austin (Hour of the day / Month)") + scale_fill_gradient( trans="sqrt", low = "white", high="dark green")
+freqHM  + scale_y_discrete(limits=rev(levels(ABIA_hmxt$hour)))
+```
+
+```{r Frequency Graphic: Day of the Week vs Month}
+ABIA_dm <- na.omit(ABIA[,c("AUS","delay","DayOfWeek", "Month")])
+ABIA_dmxt <- xtabs(~DayOfWeek + Month + AUS, ABIA_dm)
+ABIA_dmxt <- as.data.frame.table(ABIA_dmxt)
+
+freqDM <- ggplot(ABIA_dmxt, aes(Month, DayOfWeek, fill = Freq)) + facet_grid(~AUS) + geom_tile() + ylab("Day of the Week") +xlab("Month") + ggtitle("Arrivals and Departures in Austin (Day of Week / Month)") + scale_fill_gradient( trans="sqrt", low = "white", high="dark green")
+freqDM  + scale_y_discrete(limits=rev(levels(ABIA_dmxt$DayOfWeek)))
+```
+
+```{r Frequency Graphic: Hour of day vs Day of the Week}
+ABIA_dow <- na.omit(ABIA[,c("AUS","delay","hour", "DayOfWeek")])
+ABIA_hdxt <- xtabs(~hour + DayOfWeek + AUS, ABIA_dow)
+ABIA_hdxt <- as.data.frame.table(ABIA_hdxt)
+
+freqHD <- ggplot(ABIA_hdxt, aes(DayOfWeek, hour, fill = Freq)) + facet_grid(~AUS) + geom_tile() + ylab("Hour of the day") +xlab("Day of the Week") + ggtitle("Arrivals and Departures in Austin (Hour of the day / Day of the Week)") + scale_fill_gradient( trans="sqrt", low = "white", high="dark green")
+freqHD  + scale_y_discrete(limits=rev(levels(ABIA_tab$hour)))
+```
