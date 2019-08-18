@@ -1,3 +1,5 @@
+rm(list =ls())
+
 library(tm) 
 library(magrittr)
 library(slam)
@@ -16,7 +18,31 @@ readerPlain = function(fname){
   readPlain(elem=list(content=readLines(fname)), 
             id=fname, language='en') }
 
-file_list = Sys.glob('data/ReutersC50/C50train/SimonCowell/*.txt')
+authors_train = Sys.glob('C:/Users/pivo/Desktop/UT MSBA/Summer 2019/Predictive Models/STA380/data/ReutersC50/C50train/*')
+file_list_train = NULL
+labels_train = NULL
+for(author in authors_train) {
+  files_to_add = Sys.glob(paste0(author, '/*.txt'))
+  file_list_train = append(file_list_train, files_to_add)
+  author_name = substring(author, first=92)
+  labels_train = append(labels_train, rep(author_name, length(files_to_add)))
+}
+
+
+authors_test = Sys.glob('C:/Users/pivo/Desktop/UT MSBA/Summer 2019/Predictive Models/STA380/data/ReutersC50/C50test/*')
+file_list_test = NULL
+labels_test = NULL
+
+for(author in authors_test) {
+  files_to_add_test = Sys.glob(paste0(author, '/*.txt'))
+  file_list_test = append(file_list_test, files_to_add_test)
+  author_name_test = substring(author, first=91)
+  labels_test = append(labels_test, rep(author_name_test, length(files_to_add_test)))
+}
+labels_test
+
+
+file_list = Sys.glob('data/ReutersC50/C50train/*')
 simon = lapply(file_list, readerPlain) 
 
 # The file names are ugly...
@@ -62,7 +88,7 @@ dim(DTM_simon)
 
 
 ## TEST ###
-file_list_test = Sys.glob('data/ReutersC50/C50test/SimonCowell/*.txt')
+file_list_test = Sys.glob('data/ReutersC50/C50test/*')
 simon_test = lapply(file_list_test, readerPlain) 
 mynames = file_list_test %>%
   { strsplit(., '/', fixed=TRUE) } %>%
@@ -87,22 +113,18 @@ DTM_simon_test = DocumentTermMatrix(my_documents_test)
 
 convert_count <- function(x) {
   y <- ifelse(x > 0, 1,0)
-  y <- factor(y, levels=c(0,1), labels=c("No", "Yes"))
+  y <- factor(y, levels=c(0,1))
   y
 }
 # Apply the convert_count function to get final training and testing DTMs
 trainNB <- apply(DTM_simon, 2, convert_count)
 testNB <- apply(DTM_simon_test, 2, convert_count)
 
-authors = c()
-for (i in 1:length(my_documents)){
-  print(meta(my_documents[[i]])[1])
-  authors = rbind(authors, meta(my_documents[[i]])[1])
-}
 
+#trainNB_scale = scale(trainNB, center = TRUE, scale = TRUE)
+View(labels_train)
 
-classifier <- naiveBayes(trainNB, authors , laplace = 1) ##<----  how to get Author?
+classifier <- naiveBayes(trainNB, labels_train, laplace = 1) ##<----  how to get Author?
 pred <- predict(classifier, newdata=testNB) ## Error here <----
-table("Predictions"= pred,  "Actual" = df.test$class )
-
+table("Predictions"= factor(pred),  "Actual" = factor(authors_train) )
 
