@@ -12,6 +12,7 @@ always_allow_html: yes
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+# ASSOCIATIVE RULE MINING
 ```{r, include=FALSE}
 library(tidyverse)
 library(arules) 
@@ -21,7 +22,6 @@ library(ggplot2)
 library(knitr)
 library(lubridate)
 ```
-
 ```{r, include=FALSE}
 groceries = read.transactions("groceries.txt", sep = ",")
 summary(groceries)
@@ -33,9 +33,6 @@ inspect(groceries[1:5])
 groceryrules = apriori(groceries, 
 	parameter=list(support=.005, confidence=.1, maxlen=5))
 ```
-
-
-# ASSOCIATIVE RULE MINING
 
 ## Item Frequency
 
