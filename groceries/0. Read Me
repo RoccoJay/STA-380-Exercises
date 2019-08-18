@@ -1,4 +1,6 @@
-The data has a total of 13,633 transactions and 178 items. The most frequently purchased items are whole milk, other vegetables, buns, rolls and soda. From the analysis we have found that whole milk and other vegetables have very high betweeness and the top 10 rules in terms of lift are:
+The data has a total of 13,633 transactions and 178 items. 
+The most frequently purchased items are whole milk, other vegetables, buns, rolls and soda. 
+From the analysis we have found that whole milk and other vegetables have very high betweeness and the top 10 rules in terms of lift (with confidence > 0.4) are:
 1) {herbs} => {root vegatables} ; lift=5.4
 2) {other vegetables, tropical fruit, whole milk} => {yogurt} ; lift = 4.5
 3) {root vegetables, tropical fruit} => {other vegetables} ; lift = 4.2
