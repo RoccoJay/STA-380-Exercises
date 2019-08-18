@@ -2,13 +2,13 @@ library(tm)
 library(magrittr)
 library(slam)
 library(proxy)
-library(RTextTools)
+#library(RTextTools)
 library(e1071)
 library(dplyr)
 library(caret)
 # Library for parallel processing
-library(doMC)
-registerDoMC(cores=detectCores())  # Use all available cores
+#library(doMC)
+#registerDoMC(cores=detectCores())  # Use all available cores
 
 
 setwd('C:/Users/pivo/Desktop/UT MSBA/Summer 2019/Predictive Models/STA380')
@@ -56,7 +56,7 @@ my_documents = tm_map(my_documents, content_transformer(removeWords), stopwords(
 
 ## create a doc-term-matrix
 DTM_simon = DocumentTermMatrix(my_documents)
-View(inspect(DTM_simon))
+#View(inspect(DTM_simon))
 dim(DTM_simon)
 
 
@@ -94,6 +94,15 @@ convert_count <- function(x) {
 trainNB <- apply(DTM_simon, 2, convert_count)
 testNB <- apply(DTM_simon_test, 2, convert_count)
 
+authors = c()
+for (i in 1:length(my_documents)){
+  print(meta(my_documents[[i]])[1])
+  authors = rbind(authors, meta(my_documents[[i]])[1])
+}
 
+
+classifier <- naiveBayes(trainNB, authors , laplace = 1) ##<----  how to get Author?
+pred <- predict(classifier, newdata=testNB) ## Error here <----
+table("Predictions"= pred,  "Actual" = df.test$class )
 
 
