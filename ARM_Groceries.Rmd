@@ -47,7 +47,8 @@ itemFrequencyPlot(groceries, topN=20, type="absolute", main = "Counts of 20 most
 
 ## Plots re confidence, lift, and support
 
-Plots were used to see how the rules compared in terms of confidence, lift and support. The last plot takes order number into account.
+Plots were used to see how the rules compared in terms of confidence, lift and support. The last plot takes order number into account.  
+
 ```{r, echo=FALSE}
 plot(groceryrules, jitter=TRUE) #confidence and support
 ```
@@ -80,7 +81,7 @@ print(select(top10_sub_rules_df, rules, lift))
 ```{r, echo=FALSE}
 sub_rules <- groceryrules[quality(groceryrules)$confidence>0.4] 
 top10_sub_rules <- head(sub_rules, n=10, by = "lift")
-plot(top10_sub_rules, method = "graph", engine = "htmlwidget")
+plot(top10_sub_rules, method = "graph")
 ```
 
 If we lower the confidence threshold to 0.1, the top 10 rules are:
@@ -96,7 +97,7 @@ print(select(top10_sub_rules2_df, rules, lift))
 ```{r, echo=FALSE}
 sub_rules <- groceryrules[quality(groceryrules)$confidence>0.1] 
 top10_sub_rules <- head(sub_rules, n=10, by = "lift")
-plot(top10_sub_rules, method = "graph", engine = "htmlwidget")
+plot(top10_sub_rules, method = "graph")
 ```
 
 Here we see a graph of the rules with a lift of higher than 3.5:
