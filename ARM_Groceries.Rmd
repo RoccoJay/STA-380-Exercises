@@ -80,10 +80,12 @@ rownames(top10_sub_rules_df) <- NULL
 kable(select(top10_sub_rules_df, rank, rules, lift))
 ```
 
-```{r, echo=FALSE}
+![](ARM_Groceries_files/10.4.png)<!-- -->
+
+```{r, include=FALSE}
 sub_rules <- groceryrules[quality(groceryrules)$confidence>0.4] 
 top10_sub_rules <- head(sub_rules, n=10, by = "lift")
-plot(top10_sub_rules, method = "graph")
+plot(top10_sub_rules, method = "graph", engine = "htmlwidget")
 ```
 
 If we lower the confidence threshold to 0.1, the top 10 rules are:
@@ -97,10 +99,12 @@ rownames(top10_sub_rules2_df) <- NULL
 kable(select(top10_sub_rules2_df, rank, rules, lift))
 ```
 
-```{r, echo=FALSE}
+![](ARM_Groceries_files/10.1.png)<!-- -->
+
+```{r, include=FALSE}
 sub_rules <- groceryrules[quality(groceryrules)$confidence>0.1] 
 top10_sub_rules <- head(sub_rules, n=10, by = "lift")
-plot(top10_sub_rules, method = "graph")
+plot(top10_sub_rules, method = "graph", engine = "htmlwidget")
 ```
 
 Here we see a graph of the rules with a lift of higher than 3.5:

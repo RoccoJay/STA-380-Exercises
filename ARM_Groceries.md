@@ -44,7 +44,7 @@ are:
 |    9 | {root vegetables,tropical fruit,whole milk} =\> {yogurt}           | 3.401937 |
 |   10 | {citrus fruit,root vegetables,whole milk} =\> {other vegetables}   | 3.273165 |
 
-![](ARM_Groceries_files/figure-gfm/unnamed-chunk-10-1.png)<!-- -->
+![](ARM_Groceries_files/10.4.png)<!-- -->
 
 If we lower the confidence threshold to 0.1, the top 10 rules
 are:
@@ -62,7 +62,7 @@ are:
 |    9 | {whipped/sour cream} =\> {berries}                                 | 3.796886 |
 |   10 | {other vegetables,tropical fruit,whole milk} =\> {root vegetables} | 3.768074 |
 
-![](ARM_Groceries_files/figure-gfm/unnamed-chunk-12-1.png)<!-- -->
+![](ARM_Groceries_files/10.1.png)<!-- -->
 
 Here we see a graph of the rules with a lift of higher than 3.5:
 
