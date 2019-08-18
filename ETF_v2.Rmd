@@ -293,12 +293,12 @@ Port1_Upper
 Port2_Upper
 Port3_Upper
 ```
-Comparing the three portfolios of P1 Tech, P2 Commodities and Phisically Backed (C&PB) and P3 Sector ETFs shows similar distributions. Inspecting the histograms, Tech appears to have a normal distribution, C&PB has a left tail and Sector ETFs has a right tail.
+Comparing the three portfolios of P1 Tech, P2 Commodities and Phisically Backed (C&PB) and P3 Sector ETFs shows similar distributions. Inspecting the histograms, Tech appears to have a normal distribution, C&PB has a slight left tail and Sector ETFs has a slight right tail.
 
-Tech has the highest average return of 546.80 dollars above the initial 100,000 dollars. Sector ETFs also had a positive average return of 368.5 dollars while C&PB had an average negative return of 822.94 dollars. 
+Tech has the highest average return of 492.2 dollars above the initial 100,000 dollars. Sector ETFs also had a positive average return of 432.2 dollars while C&PB had an average negative return of 874.04 dollars. 
 
-The VAR for each portfolio was 95,052.90, 91,488.25 and 93,114.5 dollars for Tech, Sector ETFS and C&PB respectivley. Given the left tail for C&PB it is unsurprising that it has the lowest VAR. Tech has the best VAR - which would be the preferable portfolio for a risk averse person. 
+The VAR for each portfolio was 94,843.68, 91,178.99 and 92,692.77 dollars for Tech, Sector ETFS and C&PB respectivley. Given the left tail for C&PB it is unsurprising that it has the lowest VAR. Tech has the best VAR - which would be the preferable portfolio for a risk averse person. 
 
-Conversley, comparing the upper 95% simulated quintile shows C&PB has the highest upside with a return of 8,705.30 dollars, second to Sector EFTs with 8,443.70 dollars. Tech has the lowest return at the 95% quintile of 6,246.00 dollars.
+Conversley, comparing the upper 95% simulated quintile shows Sector EFTs  has the highest upside with a return of 8,536.60 dollars, second to C&PB with 7,171.10  dollars. Tech has the lowest return at the 95% quintile of 6,362.80 dollars.
 
-Given Tech has the highest VAR and average return, a risk averse person should invest in this portfolio. For a risk seeker, they may try the C&PB portfolio which has the highest variance and highest potential upside.
+Given Tech has the highest VaR and average return, a risk averse person should invest in this portfolio. For a risk seeker, they may try the Sector ETFs portfolio which has the highest variance and highest potential upside.
