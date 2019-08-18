@@ -21,11 +21,18 @@ readerPlain = function(fname){
 authors_train = Sys.glob('C:/Users/pivo/Desktop/UT MSBA/Summer 2019/Predictive Models/STA380/data/ReutersC50/C50train/*')
 file_list_train = NULL
 labels_train = NULL
+
 for(author in authors_train) {
   files_to_add = Sys.glob(paste0(author, '/*.txt'))
   file_list_train = append(file_list_train, files_to_add)
   author_name = substring(author, first=92)
   labels_train = append(labels_train, rep(author_name, length(files_to_add)))
+  simon = lapply(file_list_train, readerPlain) 
+  mynames = file_list_train %>%
+    { strsplit(., '/', fixed=TRUE) } %>%
+    { lapply(., tail, n=2) } %>%
+    { lapply(., paste0, collapse = '') } %>%
+    unlist
 }
 
 
@@ -38,28 +45,16 @@ for(author in authors_test) {
   file_list_test = append(file_list_test, files_to_add_test)
   author_name_test = substring(author, first=91)
   labels_test = append(labels_test, rep(author_name_test, length(files_to_add_test)))
+  simon_test = lapply(file_list_test, readerPlain) 
+  mynames = file_list_test %>%
+    { strsplit(., '/', fixed=TRUE) } %>%
+    { lapply(., tail, n=2) } %>%
+    { lapply(., paste0, collapse = '') } %>%
+    unlist
 }
 labels_test
 
 
-file_list = Sys.glob('data/ReutersC50/C50train/*')
-simon = lapply(file_list, readerPlain) 
-
-# The file names are ugly...
-file_list
-
-# Clean up the file names
-# This uses the piping operator from magrittr
-# See https://cran.r-project.org/web/packages/magrittr/vignettes/magrittr.html
-mynames = file_list %>%
-  { strsplit(., '/', fixed=TRUE) } %>%
-  { lapply(., tail, n=2) } %>%
-  { lapply(., paste0, collapse = '') } %>%
-  unlist
-
-# Rename the articles
-mynames
-names(simon) = mynames
 
 ## once you have documents in a vector, you 
 ## create a text mining 'corpus' with: 
@@ -89,12 +84,7 @@ dim(DTM_simon)
 
 ## TEST ###
 file_list_test = Sys.glob('data/ReutersC50/C50test/*')
-simon_test = lapply(file_list_test, readerPlain) 
-mynames = file_list_test %>%
-  { strsplit(., '/', fixed=TRUE) } %>%
-  { lapply(., tail, n=2) } %>%
-  { lapply(., paste0, collapse = '') } %>%
-  unlist
+
 
 names(simon_test) = mynames
 documents_raw_test = Corpus(VectorSource(simon_test))
@@ -118,13 +108,19 @@ convert_count <- function(x) {
 }
 # Apply the convert_count function to get final training and testing DTMs
 trainNB <- apply(DTM_simon, 2, convert_count)
+summary(Terms(DTM_simon_test) %in% Terms(DTM_simon))
+DTM_simon_test <- DTM_simon_test[(Terms(DTM_simon_test) %in% Terms(DTM_simon)),]
 testNB <- apply(DTM_simon_test, 2, convert_count)
 
 
-#trainNB_scale = scale(trainNB, center = TRUE, scale = TRUE)
-View(labels_train)
 
-classifier <- naiveBayes(trainNB, labels_train, laplace = 1) ##<----  how to get Author?
-pred <- predict(classifier, newdata=testNB) ## Error here <----
+
+#trainNB_scale = scale(trainNB, center = TRUE, scale = TRUE)
+
+
+classifier <- naiveBayes(trainNB, labels_train, laplace = 0) ##<----  how to get Author?
+
+pred <- predict(classifier, newdata=testNB)
+
 table("Predictions"= factor(pred),  "Actual" = factor(authors_train) )
 
