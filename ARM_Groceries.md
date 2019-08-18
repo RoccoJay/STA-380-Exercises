@@ -31,56 +31,35 @@ have very high betweeness.
 The top 10 rules with a confidence threshold of 0.4 in terms of lift
 are:
 
-    ##                                                                rules
-    ## 1    {citrus fruit,other vegetables,whole milk} => {root vegetables}
-    ## 2                                       {herbs} => {root vegetables}
-    ## 3                       {citrus fruit,pip fruit} => {tropical fruit}
-    ## 4  {other vegetables,tropical fruit,whole milk} => {root vegetables}
-    ## 5       {other vegetables,pip fruit,whole milk} => {root vegetables}
-    ## 6                                  {curd,tropical fruit} => {yogurt}
-    ## 7                       {beef,other vegetables} => {root vegetables}
-    ## 8    {fruit/vegetable juice,other vegetables,whole milk} => {yogurt}
-    ## 9            {root vegetables,tropical fruit,whole milk} => {yogurt}
-    ## 10   {citrus fruit,root vegetables,whole milk} => {other vegetables}
-    ##        lift
-    ## 1  4.085493
-    ## 2  3.956477
-    ## 3  3.854060
-    ## 4  3.768074
-    ## 5  3.724961
-    ## 6  3.690645
-    ## 7  3.688692
-    ## 8  3.479790
-    ## 9  3.401937
-    ## 10 3.273165
-
-![](ARM_Groceries_files/figure-gfm/unnamed-chunk-10-1.png)<!-- -->
+|     rank | rules                                                              |     lift |
+| -------: | :----------------------------------------------------------------- | -------: |
+|        1 | {citrus fruit,other vegetables,whole milk} =\> {root vegetables}   | 4.085493 |
+|        2 | {herbs} =\> {root vegetables}                                      | 3.956477 |
+|        3 | {citrus fruit,pip fruit} =\> {tropical fruit}                      | 3.854060 |
+|        4 | {other vegetables,tropical fruit,whole milk} =\> {root vegetables} | 3.768074 |
+|        5 | {other vegetables,pip fruit,whole milk} =\> {root vegetables}      | 3.724961 |
+|        6 | {curd,tropical fruit} =\> {yogurt}                                 | 3.690645 |
+|        7 | {beef,other vegetables} =\> {root vegetables}                      | 3.688693 |
+|        8 | {fruit/vegetable juice,other vegetables,whole milk} =\> {yogurt}   | 3.479790 |
+|        9 | {root vegetables,tropical fruit,whole milk} =\> {yogurt}           | 3.401937 |
+|       10 | {citrus fruit,root vegetables,whole milk} =\> {other vegetables}   | 3.273165 |
+| \[\](ARM | \_Groceries\_files/figure-gfm/unnamed-chunk-10-1.png)<!-- -->      |          |
 
 If we lower the confidence threshold to 0.1, the top 10 rules
-    are:
+are:
 
-    ##                                                                rules
-    ## 1                                             {ham} => {white bread}
-    ## 2                                             {white bread} => {ham}
-    ## 3    {citrus fruit,other vegetables,whole milk} => {root vegetables}
-    ## 4                  {butter,other vegetables} => {whipped/sour cream}
-    ## 5                                       {herbs} => {root vegetables}
-    ## 6                     {other vegetables,root vegetables} => {onions}
-    ## 7                       {citrus fruit,pip fruit} => {tropical fruit}
-    ## 8                                  {berries} => {whipped/sour cream}
-    ## 9                                  {whipped/sour cream} => {berries}
-    ## 10 {other vegetables,tropical fruit,whole milk} => {root vegetables}
-    ##        lift
-    ## 1  4.639851
-    ## 2  4.639851
-    ## 3  4.085493
-    ## 4  4.036397
-    ## 5  3.956477
-    ## 6  3.875044
-    ## 7  3.854060
-    ## 8  3.796886
-    ## 9  3.796886
-    ## 10 3.768074
+| rank | rules                                                              |     lift |
+| ---: | :----------------------------------------------------------------- | -------: |
+|    1 | {ham} =\> {white bread}                                            | 4.639851 |
+|    2 | {white bread} =\> {ham}                                            | 4.639851 |
+|    3 | {citrus fruit,other vegetables,whole milk} =\> {root vegetables}   | 4.085493 |
+|    4 | {butter,other vegetables} =\> {whipped/sour cream}                 | 4.036397 |
+|    5 | {herbs} =\> {root vegetables}                                      | 3.956477 |
+|    6 | {other vegetables,root vegetables} =\> {onions}                    | 3.875044 |
+|    7 | {citrus fruit,pip fruit} =\> {tropical fruit}                      | 3.854060 |
+|    8 | {berries} =\> {whipped/sour cream}                                 | 3.796886 |
+|    9 | {whipped/sour cream} =\> {berries}                                 | 3.796886 |
+|   10 | {other vegetables,tropical fruit,whole milk} =\> {root vegetables} | 3.768074 |
 
 ![](ARM_Groceries_files/figure-gfm/unnamed-chunk-12-1.png)<!-- -->
 

@@ -75,8 +75,9 @@ The top 10 rules with a confidence threshold of 0.4 in terms of lift are:
 sub_rules <- groceryrules[quality(groceryrules)$confidence>0.4] 
 top10_sub_rules <- head(sub_rules, n=10, by = "lift")
 top10_sub_rules_df <- as(top10_sub_rules, "data.frame")
-rownames(top10_sub_rules_df) <- 1:10
-print(select(top10_sub_rules_df, rules, lift))
+top10_sub_rules_df$rank <- 1:10
+rownames(top10_sub_rules_df) <- NULL
+kable(select(top10_sub_rules_df, rank, rules, lift))
 ```
 ```{r, echo=FALSE}
 sub_rules <- groceryrules[quality(groceryrules)$confidence>0.4] 
@@ -90,8 +91,9 @@ If we lower the confidence threshold to 0.1, the top 10 rules are:
 sub_rules2 <- groceryrules[quality(groceryrules)$confidence>0.1] 
 top10_sub_rules2 <- head(sub_rules2, n=10, by = "lift")
 top10_sub_rules2_df <- as(top10_sub_rules2, "data.frame")
-rownames(top10_sub_rules2_df) <- 1:10
-print(select(top10_sub_rules2_df, rules, lift))
+top10_sub_rules2_df$rank <- 1:10
+rownames(top10_sub_rules2_df) <- NULL
+kable(select(top10_sub_rules2_df, rank, rules, lift))
 ```
 
 ```{r, echo=FALSE}
