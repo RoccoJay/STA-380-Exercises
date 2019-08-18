@@ -1,0 +1,247 @@
+---
+title: "STA 380, Part 2: Exercises"
+author: "Rocco Lange, Pedro Ivo Rivas"
+date: "8/18/2019"
+output: 
+  md_document:
+    variant: gfm
+always_allow_html: yes
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# GREEN BUILDINGS:
+```{r, include=FALSE}
+rm(list=ls())
+library(mosaic)
+library(tidyverse)
+greenbuildings = read.csv('greenbuildings.csv')
+gb1 = mutate(greenbuildings,
+       rent_diff_cluster = ((Rent / cluster_rent ) - 1))
+gb1$green_rating = ifelse(gb1$green_rating==1, "Green", "Non-Green")
+gb1$class_type = gb1$class_a*2 + gb1$class_b
+gb1$class_type = ifelse(gb1$class_type==0, "Class C", ifelse(gb1$class_type==1, "Class B", "Class A"))
+gb1$net = ifelse(gb1$net==1,"Utilities Paid","Utilities Not Paid")
+```
+
+## Green Buildings have higher Proportion of Class A buildings
+
+The data was compared by class to check the proportions of green buildings versus non-green buildings in each class.  It was found that green buildings had a much higher proportion of Class A buildings, more than double the proportion of Class A non-green buildings.
+
+```{r, echo=FALSE}
+ggplot(data = gb1, mapping = aes(x=gb1$class_type, y=..prop.., fill=gb1$green_rating, group=gb1$green_rating)) +
+  geom_bar(position = position_dodge(), color='black') +  
+  scale_fill_manual(values=c("#32CD32", "#E69F00")) +
+  labs(title="Bar plot", 
+       subtitle="Class by Green Rating",
+       caption="Source: greenbuilding data set in R",
+       x="Class", y="Proportion",
+       fill="Green Rating") 
+```
+
+## Class A buildings have higher mean Rent
+
+This could be a factor in the mean rent for green buildings being higher than the mean rent for non-green buildings.  Class A buildings were found to have a mean rent of $32.32, which was nearly $6 higher than Class B and almost $9 more than Class C. 
+
+```{r, echo=FALSE}
+gb1 %>% 
+group_by(class_type) %>% 
+summarise(AverageRent = mean(Rent)) %>% 
+  ggplot(aes(factor(class_type), AverageRent, label=round(AverageRent, 2), fill=factor(class_type))) +
+  geom_col(position = position_dodge(), color='black') +
+  scale_fill_manual(values=c("#4682B4", "#48D1CC", '#B22222')) +
+  geom_text(position=position_dodge(width = 0.9),vjust = -0.3) +
+  labs(title="Bar plot",
+       subtitle="Mean Rent by Class",
+       caption="Source: greenbuilding data set in R",
+       x="Class", y="Mean Rent (dollars)", fill="Class")
+```
+
+## Green Buildings are overrepresented by Class A Buildings
+
+This suggests that since green buildings are represented by a higher proportion of Class A buildings their mean rent is distorted.  Even though for each class, except C, they are actually cheaper than non-green buildings.
+
+```{r, echo=FALSE}
+gb1 %>% 
+group_by(class_type, green_rating) %>% 
+summarise(AverageRent = mean(Rent)) %>% 
+  ggplot(aes(factor(class_type), AverageRent, label=round(AverageRent, 2), fill=factor(green_rating))) +
+  geom_col(position = position_dodge(), color='black') +
+  scale_fill_manual(values=c("#32CD32", "#E69F00")) +
+  geom_text(position=position_dodge(width = 0.9),vjust = -0.3) +
+  labs(title="Bar plot",
+       subtitle="Mean Rent by Class",
+       caption="Source: greenbuilding data set in R",
+       x="Class", y="Mean Rent (dollars)", fill="Green Rating")
+```
+
+## Conclusion
+
+In summary, the mean price for green buildings is distorted by other underlying factors such as class that make a direct impact on price whether they are green or not. Since there are different proportions of each class of building per green type, they are not comparable on green type alone. 
+
+
+# Flights at ABIA
+
+# Portfolio Modeling
+
+# MARKET SEGMENTATION:  
+## Analysis:  
+
+In order to better understand NutrientH20’s Twitter followers, Principal Component Analysis was used. Before running the algorithm, the Tweets under the ‘chatter’ and ‘uncategorized’ categories were removed as they do not provide any useful information for a market segmentation. Next, the data was normalized to use the percentage of Tweets not the overall number of Tweets in each category.  PCA was run to obtain 3 principal components, as these explain 35% of the variance in the data, to understand the categories these people tweeted about and assign them to a client archetype.  
+ 
+ 
+## Findings:  
+
+| Component | Most Tweeted                                               |
+|-----------|------------------------------------------------------------|
+| PC1       | Health and Nutrition, Personal Fitness, Cooking, Outdoors  |
+| PC2       | Photo Sharing, Cooking, Shopping, Fashion                  |
+| PC3       | College/University, Online Gaming, Sports Playing, TV/Film |
+
+
+According to these components, a few archetypes emerged.  
+
+**1. The outdoorsy:** This segment corresponds to the followers that are high on component 1. They tend to be health conscious people that are concerned with their fitness, which means they are a great target for NutrientH20 for its conceived purpose of hydration.  
+
+**2. The social:** Follows trends and want to share it with their network. They are buying the brand because it is perceived as cool or new. They probably want to show the world they try new things.  
+
+**3. The college student:** They drink NutrientH20 just because it is close by or because of the taste. They don't really associate the brand to a nutricious or sports related drink.  
+
+```{r, include = FALSE}
+rm(list = ls())
+market = read.csv("social_marketing.csv", row.names=1)
+
+library(tidyr)
+library(mosaic)
+library(dplyr)
+library(reshape2)
+library(ggplot2)
+```
+
+```{r, echo = FALSE}
+market <- cbind(market[,2:4],market[6:36])
+market_scale = market
+cormat <- round(cor(market), 2)
+melted_cormat <- melt(cormat)
+
+#market_scale = sweep(market, MARGIN = 1, FUN = '/', STATS = rowSums(market[,]))
+market_scale = market/rowSums(market)
+market_scale = scale(market_scale, center = TRUE, scale = FALSE)
+
+pc3 = prcomp(market_scale, scale=FALSE, rank=3)
+#plot(pc5)
+loadings = pc3$rotation
+scores = pc3$x
+#head(market_scale)
+pairs(scores)
+
+```
+
+# Author Attribution
+
+# ASSOCIATION RULE MINING
+```{r, include=FALSE}
+library(tidyverse)
+library(arules) 
+library(arulesViz)
+library(plyr) #splitting, applying and combining data
+library(ggplot2)
+library(knitr)
+library(lubridate)
+```
+```{r, include=FALSE}
+groceries = read.transactions("groceries.txt", sep = ",")
+summary(groceries)
+```
+```{r, include=FALSE}
+inspect(groceries[1:5])
+```
+```{r, include=FALSE}
+groceryrules = apriori(groceries, 
+	parameter=list(support=.005, confidence=.1, maxlen=5))
+```
+
+## Item Frequency
+
+The data has a total of 9835 transactions and 169 items. The most frequently purchased items are whole milk, other vegetables, rolls/buns and soda. 
+
+```{r, echo=FALSE}
+itemFrequencyPlot(groceries, topN=20, type="absolute", main = "Counts of 20 most common products")
+```
+
+## Plots re confidence, lift, and support
+
+Plots were used to see how the rules compared in terms of confidence, lift and support. The last plot takes order number into account.  
+
+```{r, echo=FALSE}
+plot(groceryrules, jitter=TRUE) #confidence and support
+```
+
+```{r, echo=FALSE}
+plot(groceryrules, measure = c("support", "lift"), shading = "confidence", jitter=TRUE) #lift and support
+```
+
+```{r, echo=FALSE}
+plot(groceryrules, method='two-key plot', jitter=TRUE) #confidence and support based on order #
+```
+
+## Betweeness
+
+From the analysis we have found that whole milk and other vegetables have very high betweeness.
+
+![](ARM_Groceries_files/Untitled.png)<!-- -->
+
+## Rules at various thresholds
+
+The top 10 rules with a confidence threshold of 0.4 in terms of lift are:
+
+```{r, echo=FALSE}
+sub_rules <- groceryrules[quality(groceryrules)$confidence>0.4] 
+top10_sub_rules <- head(sub_rules, n=10, by = "lift")
+top10_sub_rules_df <- as(top10_sub_rules, "data.frame")
+top10_sub_rules_df$rank <- 1:10
+rownames(top10_sub_rules_df) <- NULL
+kable(select(top10_sub_rules_df, rank, rules, lift))
+```
+
+![](ARM_Groceries_files/10.4.png)<!-- -->
+
+```{r, include=FALSE}
+sub_rules <- groceryrules[quality(groceryrules)$confidence>0.4] 
+top10_sub_rules <- head(sub_rules, n=10, by = "lift")
+plot(top10_sub_rules, method = "graph", engine = "htmlwidget")
+```
+
+If we lower the confidence threshold to 0.1, the top 10 rules are:
+
+```{r, echo=FALSE}
+sub_rules2 <- groceryrules[quality(groceryrules)$confidence>0.1] 
+top10_sub_rules2 <- head(sub_rules2, n=10, by = "lift")
+top10_sub_rules2_df <- as(top10_sub_rules2, "data.frame")
+top10_sub_rules2_df$rank <- 1:10
+rownames(top10_sub_rules2_df) <- NULL
+kable(select(top10_sub_rules2_df, rank, rules, lift))
+```
+
+![](ARM_Groceries_files/10.1.png)<!-- -->
+
+```{r, include=FALSE}
+sub_rules <- groceryrules[quality(groceryrules)$confidence>0.1] 
+top10_sub_rules <- head(sub_rules, n=10, by = "lift")
+plot(top10_sub_rules, method = "graph", engine = "htmlwidget")
+```
+
+Here we see a graph of the rules with a lift of higher than 3.5:
+
+```{r echo = FALSE}
+sub1 = subset(groceryrules, subset=lift > 3.5)
+#summary(sub1)
+plot(sub1, method='graph', main = "Rules where lift > 3.5")
+```
+
+## Conclusion
+
+This information can be used for strategic placement of products in a grocery store. E.g. given the high lift linking herbs with root vegatables, placing them near each other could increase sales of these products or alternativley, placing them on opposite sides of the store would force people to walk through multiple aisles and increase their chances of purchasing other products.
+

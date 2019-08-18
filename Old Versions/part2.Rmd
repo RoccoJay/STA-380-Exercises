@@ -10,6 +10,7 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 ```{r, include = FALSE}
+rm(list = ls())
 library(tidyverse)
 library(readr)
 library(ggplot2)
@@ -68,3 +69,11 @@ ggplot(data = df_group)+
   geom_histogram(aes(x = percent_rent, stat(density)), binwidth= 0.1)
 
 ```
+
+
+```{python}
+# import pandas as pd
+# df = pd.read_csv("C:/Users/pivo/Desktop/UT MSBA/Summer 2019/Predictive Models/STA380/data/greenbuildings.csv")
+# df.head(10)
+```
+
