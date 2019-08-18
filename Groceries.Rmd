@@ -1,6 +1,6 @@
 ---
 title: "Groceries"
-author: "Rocco Lange"
+author: "Pedro Ivo Rivas, Robbie Geoghegan, Sebastian Osorio, Rocco Lange"
 date: "8/18/2019"
 output: 
   md_document:
