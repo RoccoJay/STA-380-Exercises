@@ -39,6 +39,6 @@ plot(top10_sub_rules, method = "graph", engine = "htmlwidget")
 ```
 
 ```{r}
-plot(sort(groceryrules, by = "lift")[1:5], method = "graph", engine = "htmlwidget")
+plot(sort(groceryrules, by = "lift")[1:10], method = "graph", engine = "htmlwidget")
 ```
 
