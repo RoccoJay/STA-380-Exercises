@@ -5,12 +5,11 @@
 Everyone loves to travel but delays and crowds can ruin a trip. This
 analysis provides information for those people seeking to optimize their
 trips around busy times, days and months and which carriers to choose to
-avoid
-delays.
+avoid delays.
 
 ## Volume
 
-![](ABIA_files/figure-gfm/Frequency%20Graphic:%20Hour%20of%20day%20vs%20Day%20of%20the%20Week-1.png)<!-- -->
+![](ABIA_files/figure-gfm/unnamed-chunk-1-1.png)<!-- -->
 
 The above heatmap shows arrival and departure information by hour of the
 day and day of the week with Monday being day 1, Tuesday day 2 etc.. The
@@ -21,17 +20,16 @@ midday peak occurs between 12pm-1pm. Arrivals remain fairly equal
 through the afternoon while departures get busy again from 4pm until
 8pm.
 
-![](ABIA_files/figure-gfm/Frequency%20Graphic:%20Hour%20of%20day%20vs%20Month-1.png)<!-- -->
+![](ABIA_files/figure-gfm/unnamed-chunk-2-1.png)<!-- -->
 
 This heatmap shows the volume of arrivals and departures by month and
 hour of the day with Month 1 being January, Month 2 being February etc..
 The busiest time for departures is consistently 7am to 10am throughout
 the year while arrivals time peaks are concentrated in times after 11am.
 For those looking to avoid crowds, Fall months appear to have fewer
-flights than other times of the
-year.
+flights than other times of the year.
 
-![](ABIA_files/figure-gfm/Frequency%20Graphic:%20Day%20of%20the%20Week%20vs%20Month-1.png)<!-- -->
+![](ABIA_files/figure-gfm/unnamed-chunk-3-1.png)<!-- -->
 
 The above graph shows arrival and departure volumes for month and day of
 the week. Initially we thought the fact these were almost an exact match
@@ -43,7 +41,7 @@ too much planning though because concentrations occur where months have
 
 ## Delays
 
-![](ABIA_files/figure-gfm/unnamed-chunk-2-1.png)<!-- -->
+![](ABIA_files/figure-gfm/unnamed-chunk-5-1.png)<!-- -->
 
 The above graph shows the total departures that are delayed (departure
 delay is greter than 0) and not delayed by Airline Carrier. We can see
