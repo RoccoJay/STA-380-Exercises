@@ -4,15 +4,10 @@ library(tm)
 library(magrittr)
 library(slam)
 library(proxy)
-#library(RTextTools)
 library(e1071)
 library(dplyr)
 library(caret)
 library(naivebayes)
-# Library for parallel processing
-#library(doMC)
-#registerDoMC(cores=detectCores())  # Use all available cores
-
 
 setwd('C:/Users/pivo/Desktop/UT MSBA/Summer 2019/Predictive Models/STA380/data/ReutersC50')
 
@@ -37,14 +32,9 @@ mynames = file_list_train %>%
   { lapply(., tail, n=2) } %>%
   { lapply(., paste0, collapse = '') } %>%
   unlist
-
-
-
 # Rename the articles
 mynames
 names(train) = mynames
-
-
 
 #labels_train
 
@@ -115,25 +105,14 @@ NB_r <- sum(diag(pred_tab))/sum(pred_tab)
 
 
 ### Random Forest:
-library(randomForest)
-#DTM_train = DocumentTermMatrix(my_documents)
-#DTM_test = DocumentTermMatrix(my_documents_test)
-#train = as.matrix(DTM_train)
-#test =  as.matrix(DTM_test)
-#train_Y =  as.factor(labels_train)
-#test_Y = as.factor(labels_test)
 
-#train_df = cbind(as.data.frame(train), as.data.frame(train_Y))
+library(randomForest)
 colnames(train_df) <- paste(colnames(train_df), "_c", sep = "")
 test_rf <- test
 colnames(test_rf) <- paste(colnames(test), "_c", sep = "")
+model_rf <- randomForest(train_Y_c ~ . ,data = train_df, ntree=1000, mtry = 20) # Non cv
 
-# Training model with different number of trees and splits to get the optimal values for each
-#model_rf <-rfcv(X,Y,cv.fold = 10)
-
-model_rf <- randomForest(train_Y_c ~ . ,data = train_df, ntree=500, mtry = 20) # Non cv
 pred_rf <- predict(model_rf, test_rf, type = 'class')
-
 pred_tab_rf <- table("Predictions"= pred_rf,  "Actual" = labels_test)
 rf_r <- sum(diag(pred_tab_rf))/sum(pred_tab_rf)
 rf_r
