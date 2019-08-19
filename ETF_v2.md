@@ -31,9 +31,10 @@ the third is comprised of Sector ETFs.
 Comparing the three portfolios of P1 Tech, P2 Commodities and Phisically
 Backed (C\&PB) and P3 Sector ETFs shows similar distributions.
 Inspecting the histograms, Tech appears to have a normal distribution,
-C\&PB has a slight left tail and Sector ETFs has a slight right tail.
+C\&PB has a slight left tail and Sector ETFs has a slight right
+tail.
 
-![](ETF_v2_files/figure-gfm/unnamed-chunk-24-1.png)<!-- -->
+<img src="ETF_v2_files/figure-gfm/unnamed-chunk-24-1.png" style="display: block; margin: auto;" />
 
 ## Performance
 
