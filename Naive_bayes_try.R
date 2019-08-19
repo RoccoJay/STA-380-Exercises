@@ -14,19 +14,20 @@ library(naivebayes)
 #registerDoMC(cores=detectCores())  # Use all available cores
 
 
-setwd('C:/Users/pivo/Desktop/UT MSBA/Summer 2019/Predictive Models/STA380')
+setwd('C:/Users/pivo/Desktop/UT MSBA/Summer 2019/Predictive Models/STA380/data/ReutersC50')
+
 readerPlain = function(fname){
   readPlain(elem=list(content=readLines(fname)), 
             id=fname, language='en') }
 
-authors_train = Sys.glob('C:/Users/pivo/Desktop/UT MSBA/Summer 2019/Predictive Models/STA380/data/ReutersC50/C50train/*')
+authors_train = Sys.glob('C50train/*')
 file_list_train = NULL
 labels_train = NULL
 
 for(author in authors_train) {
   files_to_add = Sys.glob(paste0(author, '/*.txt'))
   file_list_train = append(file_list_train, files_to_add)
-  author_name = substring(author, first=93)
+  author_name = substring(author, first=9)
   labels_train = append(labels_train, rep(author_name, length(files_to_add)))
 }
 
@@ -47,14 +48,14 @@ names(train) = mynames
 
 #labels_train
 
-authors_test = Sys.glob('C:/Users/pivo/Desktop/UT MSBA/Summer 2019/Predictive Models/STA380/data/ReutersC50/C50test/*')
+authors_test = Sys.glob('C50test/*')
 file_list_test = NULL
 labels_test = NULL
 
 for(author in authors_test) {
   files_to_add_test = Sys.glob(paste0(author, '/*.txt'))
   file_list_test = append(file_list_test, files_to_add_test)
-  author_name_test = substring(author, first=92)
+  author_name_test = substring(author, first=8)
   labels_test = append(labels_test, rep(author_name_test, length(files_to_add_test)))
 }
 test = lapply(file_list_test, readerPlain) 
@@ -63,9 +64,6 @@ mynames = file_list_test %>%
   { lapply(., tail, n=2) } %>%
   { lapply(., paste0, collapse = '') } %>%
   unlist
-#labels_test
-
-
 
 ## once you have documents in a vector, you 
 ## create a text mining 'corpus' with: 
@@ -118,43 +116,22 @@ NB_r <- sum(diag(pred_tab))/sum(pred_tab)
 
 ### Random Forest:
 library(randomForest)
-DTM_train = DocumentTermMatrix(my_documents)
-DTM_test = DocumentTermMatrix(my_documents_test)
-train = as.matrix(DTM_train)
-test =  as.matrix(DTM_test)
-train_Y =  as.factor(labels_train)
-test_Y = as.factor(labels_test)
+#DTM_train = DocumentTermMatrix(my_documents)
+#DTM_test = DocumentTermMatrix(my_documents_test)
+#train = as.matrix(DTM_train)
+#test =  as.matrix(DTM_test)
+#train_Y =  as.factor(labels_train)
+#test_Y = as.factor(labels_test)
 
-train_df = cbind(as.data.frame(train), as.data.frame(train_Y))
+#train_df = cbind(as.data.frame(train), as.data.frame(train_Y))
 colnames(train_df) <- paste(colnames(train_df), "_c", sep = "")
 test_rf <- test
 colnames(test_rf) <- paste(colnames(test), "_c", sep = "")
 
-ntr<-c(500)   #c(200,500,1000)
-max_acc=0
-
 # Training model with different number of trees and splits to get the optimal values for each
-for (n in ntr){
-  a=c()
-  i=5
-  for (i in 5:20) {
-    model_rf <- randomForest(train_Y_c ~ . ,data=train_df, ntree = n, mtry = i, importance = TRUE)
-    predValid <- predict(model_rf, test_rf, type = "class")
-    a[i-2] = mean(predValid == labels_test)
-    if (a[i-2]>max_acc){
-      max_acc=a[i-2]
-      opt_tree=n
-      opt_m=i
-    }
-  }
-  print(paste0('Number of trees: ',n))
-  print(a)
-}
+#model_rf <-rfcv(X,Y,cv.fold = 10)
 
-model_rf <-randomForest(train_Y_c ~ . ,data=train_df,ntree=opt_tree,mtry=opt_m,importance=TRUE)
-
-
-model_rf <- randomForest(train_Y_c ~ . ,data=train_df, ntree=1000, mtry = 20) # Non cv
+model_rf <- randomForest(train_Y_c ~ . ,data = train_df, ntree=500, mtry = 20) # Non cv
 pred_rf <- predict(model_rf, test_rf, type = 'class')
 
 pred_tab_rf <- table("Predictions"= pred_rf,  "Actual" = labels_test)
