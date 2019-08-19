@@ -27,8 +27,6 @@ library(dplyr)
 library(caret)
 library(naivebayes)
 
-setwd('C:/Users/pivo/Desktop/UT MSBA/Summer 2019/Predictive Models/STA380/data')
-
 readerPlain = function(fname){
   readPlain(elem=list(content=readLines(fname)), 
             id=fname, language='en') }
@@ -37,14 +35,14 @@ readerPlain = function(fname){
 * Read the files from different folders based on author name 
 * Created a vector using each document from all folders
 ```{r, include = FALSE}
-authors_train = Sys.glob('ReutersC50/C50train/*')
+authors_train = Sys.glob('./ReutersC50/C50train/*')
 file_list_train = NULL
 labels_train = NULL
 
 for(author in authors_train) {
   files_to_add = Sys.glob(paste0(author, '/*.txt'))
   file_list_train = append(file_list_train, files_to_add)
-  author_name = substring(author, first=20)
+  author_name = substring(author, first=23)
   labels_train = append(labels_train, rep(author_name, length(files_to_add)))
 }
 
@@ -59,14 +57,14 @@ names(train) = mynames
 
 #labels_train
 
-authors_test = Sys.glob('ReutersC50/C50test/*')
+authors_test = Sys.glob('./ReutersC50/C50test/*')
 file_list_test = NULL
 labels_test = NULL
 
 for(author in authors_test) {
   files_to_add_test = Sys.glob(paste0(author, '/*.txt'))
   file_list_test = append(file_list_test, files_to_add_test)
-  author_name_test = substring(author, first=19)
+  author_name_test = substring(author, first=22)
   labels_test = append(labels_test, rep(author_name_test, length(files_to_add_test)))
 }
 test = lapply(file_list_test, readerPlain) 
@@ -92,7 +90,7 @@ my_documents = tm_map(my_documents, content_transformer(stripWhitespace)) ## rem
 my_documents = tm_map(my_documents, content_transformer(removeWords), stopwords("en"))
 
 ## TEST ###
-file_list_test = Sys.glob('data/ReutersC50/C50test/*')
+file_list_test = Sys.glob('./ReutersC50/C50test/*')
 names(test) = mynames
 documents_raw_test = Corpus(VectorSource(test))
 my_documents_test = documents_raw_test
