@@ -45,7 +45,7 @@ names(train) = mynames
 
 
 
-labels_train
+#labels_train
 
 authors_test = Sys.glob('C:/Users/pivo/Desktop/UT MSBA/Summer 2019/Predictive Models/STA380/data/ReutersC50/C50test/*')
 file_list_test = NULL
@@ -63,7 +63,7 @@ mynames = file_list_test %>%
   { lapply(., tail, n=2) } %>%
   { lapply(., paste0, collapse = '') } %>%
   unlist
-labels_test
+#labels_test
 
 
 
@@ -76,7 +76,7 @@ my_documents = tm_map(my_documents, content_transformer(removeNumbers)) # remove
 my_documents = tm_map(my_documents, content_transformer(removePunctuation)) # remove punctuation
 my_documents = tm_map(my_documents, content_transformer(stripWhitespace)) ## remove excess white-space
 my_documents = tm_map(my_documents, content_transformer(removeWords), stopwords("en"))
-## create a doc-term-matrix
+
 ## TEST ###
 file_list_test = Sys.glob('data/ReutersC50/C50test/*')
 names(test) = mynames
@@ -89,30 +89,75 @@ my_documents_test = tm_map(my_documents_test, content_transformer(stripWhitespac
 my_documents_test = tm_map(my_documents_test, content_transformer(removeWords), stopwords("en"))
 ###
 
+## create a doc-term-matrix
 DTM_train = DocumentTermMatrix(my_documents)
 DTM_test = DocumentTermMatrix(my_documents_test)
 
+
+#### NAIVE BAYES:
+
 DTM_train <- removeSparseTerms(DTM_train, 0.91)
 DTM_train_freq <- as.data.frame(as.matrix(DTM_train))
-#DTM_train_freq <- DTM_train[,findFreqTerms(DTM_train, 3)]
 DTM_train_freq <- as.data.frame(as.matrix(DTM_train_freq))
 DTM_test <- removeSparseTerms(DTM_test, 0.96)
 DTM_test <- as.data.frame(as.matrix(DTM_test))
-
-#DTM_test_norm <-DTM_test
 DTM_test_norm <- DTM_test[ ,(names(DTM_test) %in% names(DTM_train_freq))]
-
-
-#### NAIVE BAYES
 
 train = as.matrix(DTM_train_freq)
 test =  as.matrix(DTM_test_norm)
 train_Y =  as.factor(labels_train)
 test_Y = as.factor(labels_test)
 
+train_df = cbind(as.data.frame(train), as.data.frame(train_Y))
+
 classifier <-  naive_bayes(train, train_Y, laplace = 1)
 pred <- predict(classifier, test, type = 'class')
 pred_tab <- table("Predictions"= pred,  "Actual" = labels_test)
-#confusionMatrix(pred_tab)
-sum(diag(pred_tab))/sum(pred_tab)
+NB_r <- sum(diag(pred_tab))/sum(pred_tab)
+
+
+### Random Forest:
+library(randomForest)
+DTM_train = DocumentTermMatrix(my_documents)
+DTM_test = DocumentTermMatrix(my_documents_test)
+train = as.matrix(DTM_train)
+test =  as.matrix(DTM_test)
+train_Y =  as.factor(labels_train)
+test_Y = as.factor(labels_test)
+
+train_df = cbind(as.data.frame(train), as.data.frame(train_Y))
+colnames(train_df) <- paste(colnames(train_df), "_c", sep = "")
+test_rf <- test
+colnames(test_rf) <- paste(colnames(test), "_c", sep = "")
+
+ntr<-c(500)   #c(200,500,1000)
+max_acc=0
+
+# Training model with different number of trees and splits to get the optimal values for each
+for (n in ntr){
+  a=c()
+  i=5
+  for (i in 5:20) {
+    model_rf <- randomForest(train_Y_c ~ . ,data=train_df, ntree = n, mtry = i, importance = TRUE)
+    predValid <- predict(model_rf, test_rf, type = "class")
+    a[i-2] = mean(predValid == labels_test)
+    if (a[i-2]>max_acc){
+      max_acc=a[i-2]
+      opt_tree=n
+      opt_m=i
+    }
+  }
+  print(paste0('Number of trees: ',n))
+  print(a)
+}
+
+model_rf <-randomForest(train_Y_c ~ . ,data=train_df,ntree=opt_tree,mtry=opt_m,importance=TRUE)
+
+
+model_rf <- randomForest(train_Y_c ~ . ,data=train_df, ntree=1000, mtry = 20) # Non cv
+pred_rf <- predict(model_rf, test_rf, type = 'class')
+
+pred_tab_rf <- table("Predictions"= pred_rf,  "Actual" = labels_test)
+rf_r <- sum(diag(pred_tab_rf))/sum(pred_tab_rf)
+rf_r
 
