@@ -11,9 +11,11 @@ output:
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-# AUTHOR ATTRIBUTION
+# AUTHOR ATTRIBUTION  
 
-## Method
+## Introduction  
+
+Data was received in a format where a train folder contained folders for 50 authors and each author folder contained 50 documents for each author. It also contained a test folder with a similar structure with the same 50 authors and 50 other documents written by each author.
 
 ```{r, include = FALSE}
 rm(list =ls())
@@ -32,8 +34,10 @@ readerPlain = function(fname){
             id=fname, language='en') }
 ```
 
-* Read the files from different folders based on author name 
-* Created a vector using each document from all folders
+## Method  
+
+First we read the author folder names and looped through the contents to get the document information and content. This was done for both train and test sets. With this data we made a corpus document, which is a text mining document. We then mapped five content transformers to make everything lowercase and remove numbers, punctuation, excess whitespace and stop words. Next, we created a document term matrix that is a data frame like structure that comprises rows for each document and columns for all terms that appear across documents. Once this was created, sparse terms were removed on the training and test document term matrices using 91% and 96% thresholds respectively (these thresholds are somewhat arbitrary and different values could be used). Finally, we removed terms that occur in the test data but not in the train data.
+
 ```{r, include = FALSE}
 authors_train = Sys.glob('./ReutersC50/C50train/*')
 file_list_train = NULL
@@ -75,11 +79,7 @@ mynames = file_list_test %>%
   unlist
 names(test) = mynames
 ```
-
-* Created the corpus, a text mining document from the above vector
-* Created bag of words by removing all stopwords, punctuation and excess white spaces
-
-```{r}
+```{r, include=FALSE}
 ## TRAIN ##
 documents_raw = Corpus(VectorSource(train))
 my_documents = documents_raw
@@ -101,10 +101,7 @@ my_documents_test = tm_map(my_documents_test, content_transformer(stripWhitespac
 my_documents_test = tm_map(my_documents_test, content_transformer(removeWords), stopwords("en"))
 
 ```
-
-* Created a document term matrix that comprises columns with all terms written in the documents and each row representing a document
-
-```{r}
+```{r, include=FALSE}
 DTM_train = DocumentTermMatrix(my_documents)
 DTM_test = DocumentTermMatrix(my_documents_test)
 
@@ -115,9 +112,7 @@ DTM_test <- removeSparseTerms(DTM_test, 0.96)
 DTM_test <- as.data.frame(as.matrix(DTM_test))
 
 ```
-
-* Ran Naïve-Bayes by removing sparse terms and kept the terms that were in the training set and removed any words not in the training set from the test set
-```{r}
+```{r, echo=FALSE}
 DTM_test_norm <- DTM_test[ ,(names(DTM_test) %in% names(DTM_train_freq))]
 train = as.matrix(DTM_train_freq)
 test =  as.matrix(DTM_test_norm)
@@ -131,10 +126,11 @@ pred_tab <- table("Predictions"= pred,  "Actual" = labels_test)
 NB_r <- sum(diag(pred_tab))/sum(pred_tab)
 ```
 
-* Predicted accuracy of author attribution on test set with approximately 33% accuracy `r NB_r`
+## Models  
 
+First we ran Naive-Bayes to predict authors. The data was changed to matrices to run the Naive-Bayes library and had predictive accuracy of approximately `r NB_r`%. This uses the naivebayes library in R. 
 
-```{r}
+```{r, echo=FALSE}
 library(randomForest)
 colnames(train_df) <- paste(colnames(train_df), "_c", sep = "")
 test_rf <- test
@@ -146,6 +142,4 @@ pred_tab_rf <- table("Predictions"= pred_rf,  "Actual" = labels_test)
 rf_r <- sum(diag(pred_tab_rf))/sum(pred_tab_rf)
 ```
 
-* Ran Random Forest using the same dataframes as previously, but needed to add suffixes to the term names so there isn’t any conflict with R internal variable names
-* Ran Random Forest using the Random Forest library with 1,000 trees and m = 5
-* Returned accuracy of `r rf_r`
+Secondly we ran a Random Forest model with 1,250 trees and an m of 20. To run this in R, we had to change some terms in the train and test data sets so they did not conflict with special terms in R. The Random Forest model had predictive accuracy of approximately `r rf_r`%. This uses the randomForest library in R. 
