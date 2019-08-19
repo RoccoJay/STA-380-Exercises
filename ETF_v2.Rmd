@@ -42,22 +42,19 @@ The ETFs created were grouped using similar characteristics. The first portfolio
 	getSymbols(ETFs, from = "2014-01-01")
 ```
 
-	# Adjusting for splits and/or dividends
-
 ```{r, include=FALSE}
+# Adjusting for splits and/or dividends
 	QQQa = adjustOHLC(QQQ)
 	DIAa = adjustOHLC(DIA)
 	USOa = adjustOHLC(USO)
 	SPYa = adjustOHLC(SPY)
 	IWMa = adjustOHLC(IWM)
 ```
-	
-	# Combine close to close changes in a single matrix
 
 ```{r, include=FALSE}
+# Combine close to close changes in a single matrix
 	all_etf = cbind(ClCl(QQQa),ClCl(DIAa),ClCl(USOa),ClCl(SPYa),ClCl(IWMa))
 ```
-
 
 ```{r, include=FALSE}
 	all_etf = as.matrix(na.omit(all_etf))
@@ -69,7 +66,6 @@ for(ticker in ETFs) {
 	eval(parse(text=expr))
 }
 ```
-
 
 ```{r, include=FALSE}
 # Combine all the returns in a matrix
@@ -107,30 +103,25 @@ Port1_VAR = quantile(sim1[,n_days],.05)
 Port1_Upper = quantile(sim1[,n_days],.95)
 ```
 
-
 ```{r, include=FALSE}
 #Second Portfolio : "Commodities and physically backed"
 	ETFs = c("GLD","SLV","USO", "UNG")
 	getSymbols(ETFs, from = "2014-01-01")
 ```
 
-	# Adjusting for splits and/or dividends
-
 ```{r, include=FALSE}
+# Adjusting for splits and/or dividends
 	GLDa = adjustOHLC(GLD)
 	SLVa = adjustOHLC(SLV)
 	USOa = adjustOHLC(USO)
 	UNGa = adjustOHLC(UNG)
 
 ```
-	
-
-	# Combine close to close changes in a single matrix
 
 ```{r, include=FALSE}
+# Combine close to close changes in a single matrix
 	all_etf = cbind(ClCl(GLDa),ClCl(SLVa),ClCl(USOa),ClCl(UNGa))
 ```
-
 
 ```{r, include=FALSE}
 	all_etf = as.matrix(na.omit(all_etf))
@@ -148,7 +139,6 @@ for(ticker in ETFs) {
 head(GLDa)
 ```
 
-
 ```{r, include=FALSE}
 # Combine all the returns in a matrix
 all_etf = cbind(	ClCl(GLDa),
@@ -158,7 +148,6 @@ all_etf = cbind(	ClCl(GLDa),
 head(all_etf)
 all_etf = as.matrix(na.omit(all_etf))
 ```
-
 
 ```{r, include=FALSE}
 # Now simulate many different possible scenarios  
@@ -184,13 +173,10 @@ Port2_VAR = quantile(sim2[,n_days],.05)
 Port2_Upper = quantile(sim2[,n_days],.95)
 ```
 
-
 ```{r, include=FALSE}
 #p of positive returns
 mean(sim1[,n_days]>100000)
 ```
-
-
 
 ```{r, include=FALSE}
 #Third Portfolio : "Sector ETFs"
@@ -198,26 +184,19 @@ mean(sim1[,n_days]>100000)
 	getSymbols(ETFs, from = "2014-01-01")
 ```
 
-
-	
-
-	# Adjusting for splits and/or dividends
-
 ```{r, include=FALSE}
+# Adjusting for splits and/or dividends
 	OIHa = adjustOHLC(OIH)
 	XLEa = adjustOHLC(XLE)
 	XLFa = adjustOHLC(XLF)
 	IYRa = adjustOHLC(IYR)
 	BBHa = adjustOHLC(BBH)
 ```
-	
-
-	# Combine close to close changes in a single matrix
 
 ```{r, include=FALSE}
+# Combine close to close changes in a single matrix
 	all_etf = cbind(ClCl(OIHa),ClCl(XLEa),ClCl(XLFa),ClCl(IYRa),ClCl(BBHa))
 ```
-
 
 ```{r, include=FALSE}
 	all_etf = as.matrix(na.omit(all_etf))
@@ -235,7 +214,6 @@ for(ticker in ETFs) {
 head(OIHa)
 ```
 
-
 ```{r, include=FALSE}
 # Combine all the returns in a matrix
 all_etf = cbind(	ClCl(OIHa),
@@ -246,7 +224,6 @@ all_etf = cbind(	ClCl(OIHa),
 head(all_etf)
 all_etf = as.matrix(na.omit(all_etf))
 ```
-
 
 ```{r, include=FALSE}
 
@@ -276,7 +253,7 @@ Port3_Upper = quantile(sim3[,n_days],.95)
 
 Comparing the three portfolios of P1 Tech, P2 Commodities and Phisically Backed (C&PB) and P3 Sector ETFs shows similar distributions. Inspecting the histograms, Tech appears to have a normal distribution, C&PB has a slight left tail and Sector ETFs has a slight right tail.
 
-```{r}
+```{r, echo=FALSE}
 #Compare portfolios:
 par(mfrow = c(3, 1))
 hist(sim1[,n_days]- initial_wealth, breaks=30, xlim = range(-30000, 30000), ylim = range(0, 1000), main = "P1: Tech", xlab = "$ Total Returns")

@@ -26,76 +26,10 @@ portfolio is comprised of tech related industries or indexes, the second
 is comprised of physically-backed ETFs and commodities, and the third is
 comprised of Sector ETFs.
 
-    # Adjusting for splits and/or dividends
-    
-    
-    
-    # Combine close to close changes in a single matrix
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    # Adjusting for splits and/or dividends
-    
-    
-    
-    
-    # Combine close to close changes in a single matrix
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    # Adjusting for splits and/or dividends
-    
-    
-    
-    
-    # Combine close to close changes in a single matrix
-
 Comparing the three portfolios of P1 Tech, P2 Commodities and Phisically
 Backed (C\&PB) and P3 Sector ETFs shows similar distributions.
 Inspecting the histograms, Tech appears to have a normal distribution,
 C\&PB has a slight left tail and Sector ETFs has a slight right tail.
-
-``` r
-#Compare portfolios:
-par(mfrow = c(3, 1))
-hist(sim1[,n_days]- initial_wealth, breaks=30, xlim = range(-30000, 30000), ylim = range(0, 1000), main = "P1: Tech", xlab = "$ Total Returns")
-hist(sim2[,n_days]- initial_wealth, breaks=30, xlim = range(-30000, 30000), ylim = range(0, 1000), main = "P2: Commodities and Phisically Backed", xlab = "$ Total Returns")
-hist(sim3[,n_days]- initial_wealth, breaks=30, xlim = range(-30000, 30000), ylim = range(0, 1000), main = "P3: Sector ETFs", xlab = "$ Total Returns")
-```
 
 ![](ETF_v2_files/figure-gfm/unnamed-chunk-24-1.png)<!-- -->
 
