@@ -26,25 +26,10 @@ removed terms that occur in the test data but not in the train data.
 
 First we ran Naive-Bayes to predict authors. The data was changed to
 matrices to run the Naive-Bayes library and had predictive accuracy of
-approximately 0.3276%. This uses the naivebayes library in R.
-
-    ## randomForest 4.6-14
-
-    ## Type rfNews() to see new features/changes/bug fixes.
-
-    ## 
-    ## Attaching package: 'randomForest'
-
-    ## The following object is masked from 'package:ggplot2':
-    ## 
-    ##     margin
-
-    ## The following object is masked from 'package:dplyr':
-    ## 
-    ##     combine
+approximately 32.76%. This uses the naivebayes library in R.
 
 Secondly we ran a Random Forest model with 1,250 trees and an m of 20.
 To run this in R, we had to change some terms in the train and test data
 sets so they did not conflict with special terms in R. The Random Forest
-model had predictive accuracy of approximately 0.5652%. This uses the
+model had predictive accuracy of approximately 56.68%. This uses the
 randomForest library in R.

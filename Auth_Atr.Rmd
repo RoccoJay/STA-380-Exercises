@@ -112,7 +112,7 @@ DTM_test <- removeSparseTerms(DTM_test, 0.96)
 DTM_test <- as.data.frame(as.matrix(DTM_test))
 
 ```
-```{r, echo=FALSE}
+```{r, include=FALSE}
 DTM_test_norm <- DTM_test[ ,(names(DTM_test) %in% names(DTM_train_freq))]
 train = as.matrix(DTM_train_freq)
 test =  as.matrix(DTM_test_norm)
@@ -128,9 +128,9 @@ NB_r <- sum(diag(pred_tab))/sum(pred_tab)
 
 ## Models  
 
-First we ran Naive-Bayes to predict authors. The data was changed to matrices to run the Naive-Bayes library and had predictive accuracy of approximately `r NB_r`%. This uses the naivebayes library in R. 
+First we ran Naive-Bayes to predict authors. The data was changed to matrices to run the Naive-Bayes library and had predictive accuracy of approximately `r 100*NB_r`%. This uses the naivebayes library in R. 
 
-```{r, echo=FALSE}
+```{r, include=FALSE}
 library(randomForest)
 colnames(train_df) <- paste(colnames(train_df), "_c", sep = "")
 test_rf <- test
@@ -142,4 +142,4 @@ pred_tab_rf <- table("Predictions"= pred_rf,  "Actual" = labels_test)
 rf_r <- sum(diag(pred_tab_rf))/sum(pred_tab_rf)
 ```
 
-Secondly we ran a Random Forest model with 1,250 trees and an m of 20. To run this in R, we had to change some terms in the train and test data sets so they did not conflict with special terms in R. The Random Forest model had predictive accuracy of approximately `r rf_r`%. This uses the randomForest library in R. 
+Secondly we ran a Random Forest model with 1,250 trees and an m of 20. To run this in R, we had to change some terms in the train and test data sets so they did not conflict with special terms in R. The Random Forest model had predictive accuracy of approximately `r 100*rf_r`%. This uses the randomForest library in R. 
