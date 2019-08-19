@@ -104,8 +104,8 @@ lift and support. The last plot takes order number into account.
 
 ## Betweeness
 
-From the analysis we have found that whole milk and other vegetables
-have very high betweeness.
+The analysis showed that whole milk and other vegetables have very high
+betweeness.
 
 ![](ARM_Groceries_files/Untitled.png)<!-- -->
 
@@ -147,14 +147,14 @@ are:
 
 ![](ARM_Groceries_files/10.1.png)<!-- -->
 
-Here we see a graph of the rules with a lift of higher than 3.5:
+Here is a graph of the rules with a lift of higher than 3.5:
 
 ![](Final_WIP_files/figure-gfm/unnamed-chunk-19-1.png)<!-- -->
 
 ## Conclusion
 
 This information can be used for strategic placement of products in a
-grocery store. E.g. given the high lift linking herbs with root
+grocery store, e.g. given the high lift linking herbs with root
 vegatables, placing them near each other could increase sales of these
 products or alternativley, placing them on opposite sides of the store
 would force people to walk through multiple aisles and increase their
