@@ -198,7 +198,41 @@ to a nutricious or sports related drink.
 
 ![](Final_WIP_files/figure-gfm/unnamed-chunk-36-1.png)<!-- -->
 
-# Author Attribution
+# AUTHOR ATTRIBUTION
+
+## Introduction
+
+Data was received in a format where a train folder contained folders for
+50 authors and each author folder contained 50 documents for each
+author. It also contained a test folder with a similar structure with
+the same 50 authors and 50 other documents written by each author.
+
+## Method
+
+First we read the author folder names and looped through the contents to
+get the document information and content. This was done for both train
+and test sets. With this data we made a corpus document, which is a text
+mining document. We then mapped five content transformers to make
+everything lowercase and remove numbers, punctuation, excess whitespace
+and stop words. Next, we created a document term matrix that is a data
+frame like structure that comprises rows for each document and columns
+for all terms that appear across documents. Once this was created,
+sparse terms were removed on the training and test document term
+matrices using 91% and 96% thresholds respectively (these thresholds are
+somewhat arbitrary and different values could be used). Finally, we
+removed terms that occur in the test data but not in the train data.
+
+## Models
+
+First we ran Naive-Bayes to predict authors. The data was changed to
+matrices to run the Naive-Bayes library and had predictive accuracy of
+approximately 32.76%. This uses the naivebayes library in R.
+
+Secondly we ran a Random Forest model with 1,250 trees and an m of 20.
+To run this in R, we had to change some terms in the train and test data
+sets so they did not conflict with special terms in R. The Random Forest
+model had predictive accuracy of approximately 56.48%. This uses the
+randomForest library in R.
 
 # ASSOCIATION RULE MINING
 
@@ -208,18 +242,18 @@ The data has a total of 9835 transactions and 169 items. The most
 frequently purchased items are whole milk, other vegetables, rolls/buns
 and soda.
 
-![](Final_WIP_files/figure-gfm/unnamed-chunk-41-1.png)<!-- -->
+![](Final_WIP_files/figure-gfm/unnamed-chunk-47-1.png)<!-- -->
 
 ## Plots re confidence, lift, and support
 
 Plots were used to see how the rules compared in terms of confidence,
 lift and support. The last plot takes order number into account.
 
-![](Final_WIP_files/figure-gfm/unnamed-chunk-42-1.png)<!-- -->
+![](Final_WIP_files/figure-gfm/unnamed-chunk-48-1.png)<!-- -->
 
-![](Final_WIP_files/figure-gfm/unnamed-chunk-43-1.png)<!-- -->
+![](Final_WIP_files/figure-gfm/unnamed-chunk-49-1.png)<!-- -->
 
-![](Final_WIP_files/figure-gfm/unnamed-chunk-44-1.png)<!-- -->
+![](Final_WIP_files/figure-gfm/unnamed-chunk-50-1.png)<!-- -->
 
 ## Betweeness
 
@@ -268,7 +302,7 @@ are:
 
 Here is a graph of the rules with a lift of higher than 3.5:
 
-![](Final_WIP_files/figure-gfm/unnamed-chunk-49-1.png)<!-- -->
+![](Final_WIP_files/figure-gfm/unnamed-chunk-55-1.png)<!-- -->
 
 ## Conclusion
 
