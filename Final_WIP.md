@@ -35,9 +35,128 @@ whether they are green or not. Since there are different proportions of
 each class of building per green type, they are not comparable on green
 type alone.
 
-# Flights at ABIA
+# FLIGHTS AT ABIA
 
-# Portfolio Modeling
+## Introduction
+
+Everyone loves to travel but delays and crowds can ruin a trip. This
+analysis provides information for those people seeking to optimize their
+trips around busy times, days and months and which carriers to choose to
+avoid delays.
+
+## Volume
+
+![](Final_WIP_files/figure-gfm/unnamed-chunk-5-1.png)<!-- -->
+
+The above heatmap shows arrival and departure information by hour of the
+day and day of the week with Monday being day 1, Tuesday day 2 etc.. The
+early hours of the day before 6am are quiet but become the busiest of
+the day between 7am to 10am on weekdays. Saturday is the least busy of
+all days so is a great day to travel for someone to avoid crowds. A
+midday peak occurs between 12pm-1pm. Arrivals remain fairly equal
+through the afternoon while departures get busy again from 4pm until
+8pm.
+
+![](Final_WIP_files/figure-gfm/unnamed-chunk-6-1.png)<!-- -->
+
+This heatmap shows the volume of arrivals and departures by month and
+hour of the day with Month 1 being January, Month 2 being February etc..
+The busiest time for departures is consistently 7am to 10am throughout
+the year while arrivals time peaks are concentrated in times after 11am.
+For those looking to avoid crowds, Fall months appear to have fewer
+flights than other times of the year.
+
+![](Final_WIP_files/figure-gfm/unnamed-chunk-7-1.png)<!-- -->
+
+The above graph shows arrival and departure volumes for month and day of
+the week. Initially we thought the fact these were almost an exact match
+was an error, however what it shows is that approximatley the same
+number of flights that land each day depart that day. Saturday is again
+shown to have small volumes of fligths. This graph shouldn’t be used for
+too much planning though because concentrations occur where months have
+5 occurences of a day rather than 4 of others.
+
+## Delays
+
+![](Final_WIP_files/figure-gfm/unnamed-chunk-9-1.png)<!-- -->
+
+The above graph shows the total departures that are delayed (departure
+delay is greter than 0) and not delayed by Airline Carrier. We can see
+that WN (Southwest Airlines) provides the most flights from Austin and
+AA (American Airlines) is the second most. This may be useful when
+mitigating against flight cancellations - these airlines are more likely
+to have other flights that a passenger can be moved to. Very
+interestingly, Southwest Airlines has the most flights and the highest
+proportion of departure delays - with more flights being delayed than
+not. Conversley, American Airlines has one of the highest proportion of
+departures that are not delayed. A commuter who wants to avoid delays
+and mitigate against cancellation risks should choose American Airlines.
+Other good options to avoid delays is to use 9E (Endeavor Air) and US
+(US Airways).
+
+# PORTFOLIO MODELING
+
+## Some examples ETFs:
+
+**SPDR S\&P 500 (SPY):** The oldest surviving and most widely known ETF
+tracks the S\&P 500 Index iShares Russell 2000 (IWM): Tracks the Russell
+2000 small-cap index
+
+**Invesco QQQ (QQQ):** Indexes the Nasdaq 100, which typically contains
+technology stocks SPDR Dow Jones Industrial Average (DIA): Represents
+the 30 stocks of the Dow Jones Industrial Average
+
+**Sector ETFs:** Track individual industries such as oil (OIH), energy
+(XLE), financial services (XLF), REITs (IYR), Biotech (BBH)
+
+**Commodity ETFs:** Represent commodity markets including crude oil
+(USO) and natural gas (UNG)
+
+**Physically-Backed ETFs:** The SPDR Gold Shares (GLD) and iShares
+Silver Trust (SLV) hold physical gold and silver bullion in the fund
+
+## Creating Portfolios
+
+The ETFs portfolios created were grouped using similar characteristics.
+The first portfolio is comprised of tech related industries or indexes,
+the second is comprised of physically-backed ETFs and commodities, and
+the third is comprised of Sector ETFs.
+
+## Comparing the Portfolios
+
+Comparing the three portfolios of P1 Tech, P2 Commodities and Phisically
+Backed (C\&PB) and P3 Sector ETFs shows similar distributions.
+Inspecting the histograms, Tech appears to have a normal distribution,
+C\&PB has a slight left tail and Sector ETFs has a slight right
+tail.
+
+<img src="Final_WIP_files/figure-gfm/unnamed-chunk-33-1.png" style="display: block; margin: auto;" />
+
+## Performance
+
+Tech has the highest average return of 613 dollars above the initial
+100,000 dollars. Sector ETFs also had a positive average return of 468.3
+dollars while C\&PB had an average negative return of 795.48 dollars.
+
+The VaR for each portfolio was 93,873.05, 91,606.53 and 92,976.33
+dollars for Tech, Sector ETFS and C\&PB respectively. Given the left
+tail for C\&PB it is unsurprising that it has the lowest VaR, by far.
+Tech has the best VaR - which would be the preferable portfolio for a
+risk averse person.
+
+Conversley, comparing the upper 95% simulated quantile shows Sector EFTs
+has the highest upside with a return of 8,480.40 dollars, second is Tech
+with 7,440.20 dollars. C\&PB has the lowest return at the 95% quintile
+of 7,227.50 dollars.
+
+## Conclusion
+
+Given Tech has the highest VaR and average return, a risk averse person
+should invest in this portfolio. For a risk seeker, they may try the
+Sector ETFs portfolio which has the highest variance and highest
+potential upside. The C\&PB portfolio is the riskiest and more volatile
+out of the 3, there’s even a chance of losing more than 25% of it’s
+value during the analyzed period.
 
 # MARKET SEGMENTATION:
 
@@ -77,7 +196,7 @@ new. They probably want to show the world they try new things.
 close by or because of the taste. They don’t really associate the brand
 to a nutricious or sports related drink.
 
-![](Final_WIP_files/figure-gfm/unnamed-chunk-6-1.png)<!-- -->
+![](Final_WIP_files/figure-gfm/unnamed-chunk-36-1.png)<!-- -->
 
 # Author Attribution
 
@@ -89,18 +208,18 @@ The data has a total of 9835 transactions and 169 items. The most
 frequently purchased items are whole milk, other vegetables, rolls/buns
 and soda.
 
-![](Final_WIP_files/figure-gfm/unnamed-chunk-11-1.png)<!-- -->
+![](Final_WIP_files/figure-gfm/unnamed-chunk-41-1.png)<!-- -->
 
 ## Plots re confidence, lift, and support
 
 Plots were used to see how the rules compared in terms of confidence,
 lift and support. The last plot takes order number into account.
 
-![](Final_WIP_files/figure-gfm/unnamed-chunk-12-1.png)<!-- -->
+![](Final_WIP_files/figure-gfm/unnamed-chunk-42-1.png)<!-- -->
 
-![](Final_WIP_files/figure-gfm/unnamed-chunk-13-1.png)<!-- -->
+![](Final_WIP_files/figure-gfm/unnamed-chunk-43-1.png)<!-- -->
 
-![](Final_WIP_files/figure-gfm/unnamed-chunk-14-1.png)<!-- -->
+![](Final_WIP_files/figure-gfm/unnamed-chunk-44-1.png)<!-- -->
 
 ## Betweeness
 
@@ -149,7 +268,7 @@ are:
 
 Here is a graph of the rules with a lift of higher than 3.5:
 
-![](Final_WIP_files/figure-gfm/unnamed-chunk-19-1.png)<!-- -->
+![](Final_WIP_files/figure-gfm/unnamed-chunk-49-1.png)<!-- -->
 
 ## Conclusion
 
