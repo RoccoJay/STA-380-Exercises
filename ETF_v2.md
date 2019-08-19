@@ -21,10 +21,10 @@ and natural gas (UNG)
 *Physically-Backed ETFs:* The SPDR Gold Shares (GLD) and iShares Silver
 Trust (SLV) hold physical gold and silver bullion in the fund
 
-The ETFs created were grouped using similar characteristics. The first
-portfolio is comprised of tech related industries or indexes, the second
-is comprised of physically-backed ETFs and commodities, and the third is
-comprised of Sector ETFs.
+The ETFs portfolios created were grouped using similar characteristics.
+The first portfolio is comprised of tech related industries or indexes,
+the second is comprised of physically-backed ETFs and commodities, and
+the third is comprised of Sector ETFs.
 
 Comparing the three portfolios of P1 Tech, P2 Commodities and Phisically
 Backed (C\&PB) and P3 Sector ETFs shows similar distributions.
@@ -33,22 +33,48 @@ C\&PB has a slight left tail and Sector ETFs has a slight right tail.
 
 ![](ETF_v2_files/figure-gfm/unnamed-chunk-24-1.png)<!-- -->
 
-Tech has the highest average return of 492.2 dollars above the initial
-100,000 dollars. Sector ETFs also had a positive average return of 432.2
-dollars while C\&PB had an average negative return of 874.04 dollars.
+    ## [1] 100613
 
-The VAR for each portfolio was 94,843.68, 91,178.99 and 92,692.77
-dollars for Tech, Sector ETFS and C\&PB respectivley. Given the left
-tail for C\&PB it is unsurprising that it has the lowest VAR. Tech has
-the best VAR - which would be the preferable portfolio for a risk averse
-person.
+    ## [1] 99204.52
 
-Conversley, comparing the upper 95% simulated quintile shows Sector EFTs
-has the highest upside with a return of 8,536.60 dollars, second to
-C\&PB with 7,171.10 dollars. Tech has the lowest return at the 95%
-quintile of 6,362.80 dollars.
+    ## [1] 100468.3
+
+    ##       5% 
+    ## 93873.05
+
+    ##       5% 
+    ## 91606.53
+
+    ##       5% 
+    ## 92976.33
+
+    ##      95% 
+    ## 107440.2
+
+    ##      95% 
+    ## 107227.5
+
+    ##      95% 
+    ## 108480.4
+
+Tech has the highest average return of 613 dollars above the initial
+100,000 dollars. Sector ETFs also had a positive average return of 468.3
+dollars while C\&PB had an average negative return of 795.48 dollars.
+
+The VaR for each portfolio was 93,873.05, 91,606.53 and 92,976.33
+dollars for Tech, Sector ETFS and C\&PB respectively. Given the left
+tail for C\&PB it is unsurprising that it has the lowest VaR, by far.
+Tech has the best VaR - which would be the preferable portfolio for a
+risk averse person.
+
+Conversley, comparing the upper 95% simulated quantile shows Sector EFTs
+has the highest upside with a return of 8,480.40 dollars, second is Tech
+with 7,440.20 dollars. C\&PB has the lowest return at the 95% quintile
+of 7,227.50 dollars.
 
 Given Tech has the highest VaR and average return, a risk averse person
 should invest in this portfolio. For a risk seeker, they may try the
 Sector ETFs portfolio which has the highest variance and highest
-potential upside.
+potential upside. The C\&PB portfolio is the riskiest and more volatile
+out of the 3, there’s even a chance of losing more than 25% of it’s
+value during the analyzed period.
