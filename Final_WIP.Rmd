@@ -191,7 +191,7 @@ plot(groceryrules, method='two-key plot', jitter=TRUE) #confidence and support b
 
 The analysis showed that whole milk and other vegetables have very high betweeness.
 
-![](ARM_Groceries_files/Untitled.png)<!-- -->
+![](Old Versions/ARM_Groceries_files/Untitled.png)<!-- -->
 
 ## Rules at various thresholds
 
@@ -206,7 +206,7 @@ rownames(top10_sub_rules_df) <- NULL
 kable(select(top10_sub_rules_df, rank, rules, lift))
 ```
 
-![](ARM_Groceries_files/10.4.png)<!-- -->
+![](Old Versions/ARM_Groceries_files/10.4.png)<!-- -->
 
 ```{r, include=FALSE}
 sub_rules <- groceryrules[quality(groceryrules)$confidence>0.4] 
@@ -225,7 +225,7 @@ rownames(top10_sub_rules2_df) <- NULL
 kable(select(top10_sub_rules2_df, rank, rules, lift))
 ```
 
-![](ARM_Groceries_files/10.1.png)<!-- -->
+![](Old Versions/ARM_Groceries_files/10.1.png)<!-- -->
 
 ```{r, include=FALSE}
 sub_rules <- groceryrules[quality(groceryrules)$confidence>0.1] 
