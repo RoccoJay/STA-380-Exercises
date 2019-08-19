@@ -1,0 +1,15 @@
+The data has a total of 9835 transactions and 170 items. 
+The most frequently purchased items are whole milk, other vegetables, rolls/buns and soda. 
+From the analysis we have found that whole milk and other vegetables have very high betweeness and the top 10 rules in terms of lift (with confidence > 0.4) are:
+1) {citrus fruit, other vegetables, whole milk} => {root vegetables} ; lift = 3.3
+2) {herbs} => {root vegatables} ; lift = 4.0
+3) {citrus fruit, pip fruit} => {tropical fruit} ; lift = 3.9
+4) {other vegetables, tropical fruit, whole milk} => {root vegetables} ; lift = 3.8
+5) {other vegetables, pip fruit, whole milk} => {root vegetables} ; lift = 3.7
+6) {curd, tropical fruit} => {yogurt} ; lift = 3.7
+7) {beef,  other vegetables} => {root vegetables} ; lift = 3.7
+8) {fruit/vegetable juice, other vegetables, whole milk} => {yogurt} ; lift = 3.5
+9) {root vegetables, tropical fruit, whole milk} => {yogurt} ; lift = 3.4
+10) {root vegetables, tropical fruit, whole milk} => {yogurt} ; lift =3.3
+
+This information can be used for strategic placement of products in a grocery store. E.g. given the high lift linking herbs with root vegatables, placing them near each other could increase sales of these products or alternativley, placing them on opposite sides of the store would force people to walk through multiple aisles and increase their chances of purchasing other products.

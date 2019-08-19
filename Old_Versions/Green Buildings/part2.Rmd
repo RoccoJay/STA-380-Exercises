@@ -1,0 +1,79 @@
+---
+title: "R Homework"
+author: "Pedro Ivo Rivas"
+date: "8/9/2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r, include = FALSE}
+rm(list = ls())
+library(tidyverse)
+library(readr)
+library(ggplot2)
+setwd("C:/Users/pivo/Desktop/UT MSBA/Summer 2019/Predictive Models/STA380")
+df_gb <- read_csv("data/greenbuildings.csv")
+```
+
+```{r}
+#ggplot(data=df_gb) + 
+#  geom_histogram(aes(x=age))
+
+ggplot(data=df_gb) +
+         geom_histogram(aes(x=age, stat(density)), binwidth=2) +
+         facet_grid(green_rating ~ .)+
+         theme_bw(base_size=18)
+```
+
+```{r}
+ggplot(data=df_gb[df_gb['Rent'] < 100,]) +
+         geom_histogram(aes(x=Rent, stat(density)), binwidth=2) +
+         facet_grid(green_rating ~ .)+
+         theme_bw(base_size=18)
+```
+
+```{r}
+df_group <- df_gb %>%
+  group_by(cluster) %>%
+  mutate(rent_new = mean(Rent))
+  
+df_non_green <- df_gb[df_gb$green_rating != 1,c('cluster','Rent')] %>%
+  group_by(cluster) %>%
+  mutate(rent_ng = mean(Rent))
+
+df_non_green <- unique(df_non_green[,c('cluster','rent_ng')])
+
+df_group <- merge(df_group,df_non_green, by = 'cluster')
+df_group
+
+df_group <- mutate(df_group, percent_rent = Rent/rent_ng)
+```
+
+```{r}
+ggplot(data = df_group[df_group$green_rating == 1,] )+
+  geom_histogram(aes(x = percent_rent), binwidth= 0.1)
+
+cheap_g <- nrow(df_group[(df_group$green_rating == 1)&(df_group$percent_rent < 1),])
+expensive_g <- nrow(df_group[(df_group$green_rating == 1)&(df_group$percent_rent > 1),])
+print(cheap_g)
+print(expensive_g)
+
+```
+
+```{r}
+ggplot(data = df_group)+
+  facet_grid(vars(net), vars(green_rating))+
+  geom_histogram(aes(x = percent_rent, stat(density)), binwidth= 0.1)
+
+```
+
+
+```{python}
+# import pandas as pd
+# df = pd.read_csv("C:/Users/pivo/Desktop/UT MSBA/Summer 2019/Predictive Models/STA380/data/greenbuildings.csv")
+# df.head(10)
+```
+
