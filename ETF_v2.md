@@ -1,30 +1,32 @@
 # PORTFOLIO MODELING
 
-## Intro to ETFs
+## Some examples ETFs:
 
-Some examples ETFs:
-
-*SPDR S\&P 500 (SPY):* The oldest surviving and most widely known ETF
+**SPDR S\&P 500 (SPY):** The oldest surviving and most widely known ETF
 tracks the S\&P 500 Index iShares Russell 2000 (IWM): Tracks the Russell
 2000 small-cap index
 
-*Invesco QQQ (QQQ):* Indexes the Nasdaq 100, which typically contains
+**Invesco QQQ (QQQ):** Indexes the Nasdaq 100, which typically contains
 technology stocks SPDR Dow Jones Industrial Average (DIA): Represents
 the 30 stocks of the Dow Jones Industrial Average
 
-*Sector ETFs:* Track individual industries such as oil (OIH), energy
+**Sector ETFs:** Track individual industries such as oil (OIH), energy
 (XLE), financial services (XLF), REITs (IYR), Biotech (BBH)
 
-*Commodity ETFs:* Represent commodity markets including crude oil (USO)
-and natural gas (UNG)
+**Commodity ETFs:** Represent commodity markets including crude oil
+(USO) and natural gas (UNG)
 
-*Physically-Backed ETFs:* The SPDR Gold Shares (GLD) and iShares Silver
-Trust (SLV) hold physical gold and silver bullion in the fund
+**Physically-Backed ETFs:** The SPDR Gold Shares (GLD) and iShares
+Silver Trust (SLV) hold physical gold and silver bullion in the fund
+
+## Creating Portfolios
 
 The ETFs portfolios created were grouped using similar characteristics.
 The first portfolio is comprised of tech related industries or indexes,
 the second is comprised of physically-backed ETFs and commodities, and
 the third is comprised of Sector ETFs.
+
+## Comparing the Portfolios
 
 Comparing the three portfolios of P1 Tech, P2 Commodities and Phisically
 Backed (C\&PB) and P3 Sector ETFs shows similar distributions.
@@ -33,29 +35,7 @@ C\&PB has a slight left tail and Sector ETFs has a slight right tail.
 
 ![](ETF_v2_files/figure-gfm/unnamed-chunk-24-1.png)<!-- -->
 
-    ## [1] 100613
-
-    ## [1] 99204.52
-
-    ## [1] 100468.3
-
-    ##       5% 
-    ## 93873.05
-
-    ##       5% 
-    ## 91606.53
-
-    ##       5% 
-    ## 92976.33
-
-    ##      95% 
-    ## 107440.2
-
-    ##      95% 
-    ## 107227.5
-
-    ##      95% 
-    ## 108480.4
+## Performance
 
 Tech has the highest average return of 613 dollars above the initial
 100,000 dollars. Sector ETFs also had a positive average return of 468.3
@@ -71,6 +51,8 @@ Conversley, comparing the upper 95% simulated quantile shows Sector EFTs
 has the highest upside with a return of 8,480.40 dollars, second is Tech
 with 7,440.20 dollars. C\&PB has the lowest return at the 95% quintile
 of 7,227.50 dollars.
+
+## Conclusion
 
 Given Tech has the highest VaR and average return, a risk averse person
 should invest in this portfolio. For a risk seeker, they may try the

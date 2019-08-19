@@ -267,7 +267,7 @@ hist(sim3[,n_days]- initial_wealth, breaks=30, xlim = range(-30000, 30000), ylim
 
 ```
 
-```{r, echo=FALSE}
+```{r, include=FALSE}
 #Compare average estimated returns
 Port1_Mean
 Port2_Mean
