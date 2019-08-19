@@ -1,6 +1,6 @@
 ---
 title: "STA 380, Part 2: Exercises"
-author: "Rocco Lange, Pedro Ivo Rivas"
+author: "Rocco Lange, Pedro Ivo Rivas, Robbie Geoghegan, Sebastian Osorio"
 date: "8/18/2019"
 output: 
   md_document:
@@ -11,6 +11,9 @@ always_allow_html: yes
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
+# STA 380, Part 2: Exercises
+
+## By: Rocco Lange, Pedro Ivo Rivas, Robbie Geoghegan, Sebastian Osorio
 
 # GREEN BUILDINGS:
 ```{r, include=FALSE}

@@ -1,3 +1,7 @@
+# STA 380, Part 2: Exercises
+
+## By: Rocco Lange, Pedro Ivo Rivas, Robbie Geoghegan, Sebastian Osorio
+
 # GREEN BUILDINGS:
 
 ## Green Buildings have higher Proportion of Class A buildings
