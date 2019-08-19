@@ -1,0 +1,297 @@
+---
+title: "STA380"
+author: "SebastianOsorio"
+date: "12/8/2019"
+output: 
+  md_document:
+    variant: gfm
+---
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+```{r, include=FALSE}
+library(mosaic)
+library(quantmod)
+library(foreach)
+library(xts)
+```
+
+# PORTFOLIO MODELING	
+
+## Some examples ETFs:
+
+**SPDR S&P 500 (SPY):** The oldest surviving and most widely known ETF tracks the S&P 500 Index
+iShares Russell 2000 (IWM): Tracks the Russell 2000 small-cap index
+
+**Invesco QQQ (QQQ):** Indexes the Nasdaq 100, which typically contains technology stocks
+SPDR Dow Jones Industrial Average (DIA): Represents the 30 stocks of the Dow Jones Industrial Average
+
+**Sector ETFs:** Track individual industries such as oil (OIH), energy (XLE), financial services (XLF), REITs (IYR), Biotech (BBH)
+
+**Commodity ETFs:** Represent commodity markets including crude oil (USO) and natural gas (UNG)
+
+**Physically-Backed ETFs:** The SPDR Gold Shares (GLD) and iShares Silver Trust (SLV) hold physical gold and silver bullion in the fund
+
+## Creating Portfolios
+
+The ETFs portfolios created were grouped using similar characteristics. The first portfolio is comprised of tech related industries or indexes, the second is comprised of physically-backed ETFs and commodities, and the third is comprised of Sector ETFs. 
+
+```{r, include=FALSE}
+#First Portfolio : "Tech"
+	ETFs = c("QQQ","DIA","USO","SPY", "IWM")
+	getSymbols(ETFs, from = "2014-01-01")
+```
+
+```{r, include=FALSE}
+# Adjusting for splits and/or dividends
+	QQQa = adjustOHLC(QQQ)
+	DIAa = adjustOHLC(DIA)
+	USOa = adjustOHLC(USO)
+	SPYa = adjustOHLC(SPY)
+	IWMa = adjustOHLC(IWM)
+```
+
+```{r, include=FALSE}
+# Combine close to close changes in a single matrix
+	all_etf = cbind(ClCl(QQQa),ClCl(DIAa),ClCl(USOa),ClCl(SPYa),ClCl(IWMa))
+```
+
+```{r, include=FALSE}
+	all_etf = as.matrix(na.omit(all_etf))
+```
+
+```{r, include=FALSE}
+for(ticker in ETFs) {
+	expr = paste0(ticker, "a = adjustOHLC(", ticker, ")")
+	eval(parse(text=expr))
+}
+```
+
+```{r, include=FALSE}
+# Combine all the returns in a matrix
+all_etf = cbind(	ClCl(QQQa),
+								ClCl(DIAa),
+								ClCl(USOa),
+								ClCl(SPYa),
+								ClCl(IWMa))
+head(all_etf)
+all_etf = as.matrix(na.omit(all_etf))
+```
+
+```{r, include=FALSE}
+
+# Now simulate many different possible scenarios
+set.seed(100)
+initial_wealth = 100000
+sim1 = foreach(i=1:5000, .combine='rbind') %do% {
+	total_wealth = initial_wealth
+	weights = c(0.2, 0.2, 0.2, 0.2, 0.2)
+	holdings = weights * total_wealth
+	n_days = 20
+	wealthtracker = rep(0, n_days)
+	for(today in 1:n_days) {
+		return.today = resample(all_etf, 1, orig.ids=FALSE)
+		holdings = holdings + holdings*return.today
+		total_wealth = sum(holdings)
+		wealthtracker[today] = total_wealth
+	}
+	wealthtracker
+}
+
+# Profit/loss and VAR
+Port1_Mean = mean(sim1[,n_days])
+Port1_VAR = quantile(sim1[,n_days],.05)
+Port1_Upper = quantile(sim1[,n_days],.95)
+```
+
+```{r, include=FALSE}
+#Second Portfolio : "Commodities and physically backed"
+	ETFs = c("GLD","SLV","USO", "UNG")
+	getSymbols(ETFs, from = "2014-01-01")
+```
+
+```{r, include=FALSE}
+# Adjusting for splits and/or dividends
+	GLDa = adjustOHLC(GLD)
+	SLVa = adjustOHLC(SLV)
+	USOa = adjustOHLC(USO)
+	UNGa = adjustOHLC(UNG)
+
+```
+
+```{r, include=FALSE}
+# Combine close to close changes in a single matrix
+	all_etf = cbind(ClCl(GLDa),ClCl(SLVa),ClCl(USOa),ClCl(UNGa))
+```
+
+```{r, include=FALSE}
+	all_etf = as.matrix(na.omit(all_etf))
+	head(all_etf)
+	pairs(all_etf)
+	dim(all_etf)
+```
+
+```{r, include=FALSE}
+for(ticker in ETFs) {
+	expr = paste0(ticker, "a = adjustOHLC(", ticker, ")")
+	eval(parse(text=expr))
+}
+
+head(GLDa)
+```
+
+```{r, include=FALSE}
+# Combine all the returns in a matrix
+all_etf = cbind(	ClCl(GLDa),
+								ClCl(SLVa),
+								ClCl(USOa),
+								ClCl(UNGa))
+head(all_etf)
+all_etf = as.matrix(na.omit(all_etf))
+```
+
+```{r, include=FALSE}
+# Now simulate many different possible scenarios  
+set.seed(100)
+initial_wealth = 100000
+sim2 = foreach(i=1:5000, .combine='rbind') %do% {
+	total_wealth = initial_wealth
+	weights = c(0.25, 0.25, 0.25, 0.25)
+	holdings = weights * total_wealth
+	n_days = 20
+	wealthtracker = rep(0, n_days)
+	for(today in 1:n_days) {
+		return.today = resample(all_etf, 1, orig.ids=FALSE)
+		holdings = holdings + holdings*return.today
+		total_wealth = sum(holdings)
+		wealthtracker[today] = total_wealth
+	}
+	wealthtracker
+}
+
+# Profit/loss
+Port2_Mean = mean(sim2[,n_days])
+Port2_VAR = quantile(sim2[,n_days],.05)
+Port2_Upper = quantile(sim2[,n_days],.95)
+```
+
+```{r, include=FALSE}
+#p of positive returns
+mean(sim1[,n_days]>100000)
+```
+
+```{r, include=FALSE}
+#Third Portfolio : "Sector ETFs"
+	ETFs = c("OIH","XLE","XLF","IYR", "BBH")
+	getSymbols(ETFs, from = "2014-01-01")
+```
+
+```{r, include=FALSE}
+# Adjusting for splits and/or dividends
+	OIHa = adjustOHLC(OIH)
+	XLEa = adjustOHLC(XLE)
+	XLFa = adjustOHLC(XLF)
+	IYRa = adjustOHLC(IYR)
+	BBHa = adjustOHLC(BBH)
+```
+
+```{r, include=FALSE}
+# Combine close to close changes in a single matrix
+	all_etf = cbind(ClCl(OIHa),ClCl(XLEa),ClCl(XLFa),ClCl(IYRa),ClCl(BBHa))
+```
+
+```{r, include=FALSE}
+	all_etf = as.matrix(na.omit(all_etf))
+	head(all_etf)
+	pairs(all_etf)
+	dim(all_etf)
+```
+
+```{r, include=FALSE}
+for(ticker in ETFs) {
+	expr = paste0(ticker, "a = adjustOHLC(", ticker, ")")
+	eval(parse(text=expr))
+}
+
+head(OIHa)
+```
+
+```{r, include=FALSE}
+# Combine all the returns in a matrix
+all_etf = cbind(	ClCl(OIHa),
+								ClCl(XLEa),
+								ClCl(XLFa),
+								ClCl(IYRa),
+								ClCl(BBHa))
+head(all_etf)
+all_etf = as.matrix(na.omit(all_etf))
+```
+
+```{r, include=FALSE}
+
+# Now simulate many different possible scenarios 
+set.seed(100)
+initial_wealth = 100000
+sim3 = foreach(i=1:5000, .combine='rbind') %do% {
+	total_wealth = initial_wealth
+	weights = c(0.2, 0.2, 0.2, 0.2, 0.2)
+	holdings = weights * total_wealth
+	n_days = 20
+	wealthtracker = rep(0, n_days)
+	for(today in 1:n_days) {
+		return.today = resample(all_etf, 1, orig.ids=FALSE)
+		holdings = holdings + holdings*return.today
+		total_wealth = sum(holdings)
+		wealthtracker[today] = total_wealth
+	}
+	wealthtracker
+}
+
+# Profit/loss and VAR
+Port3_Mean = mean(sim3[,n_days])
+Port3_VAR = quantile(sim3[,n_days],.05)
+Port3_Upper = quantile(sim3[,n_days],.95)
+
+```
+
+## Comparing the Portfolios
+
+Comparing the three portfolios of P1 Tech, P2 Commodities and Phisically Backed (C&PB) and P3 Sector ETFs shows similar distributions. Inspecting the histograms, Tech appears to have a normal distribution, C&PB has a slight left tail and Sector ETFs has a slight right tail.
+
+```{r, echo=FALSE, fig.align='center'}
+#Compare portfolios:
+par(mfrow = c(3, 1))
+hist(sim1[,n_days]- initial_wealth, breaks=30, xlim = range(-30000, 30000), ylim = range(0, 1000), main = "P1: Tech", xlab = "$ Total Returns")
+hist(sim2[,n_days]- initial_wealth, breaks=30, xlim = range(-30000, 30000), ylim = range(0, 1000), main = "P2: Commodities and Phisically Backed", xlab = "$ Total Returns")
+hist(sim3[,n_days]- initial_wealth, breaks=30, xlim = range(-30000, 30000), ylim = range(0, 1000), main = "P3: Sector ETFs", xlab = "$ Total Returns")
+
+```
+
+```{r, include=FALSE}
+#Compare average estimated returns
+Port1_Mean
+Port2_Mean
+Port3_Mean
+
+#Compare the VAR
+Port1_VAR
+Port2_VAR
+Port3_VAR
+
+#Compare Upper Returns
+Port1_Upper
+Port2_Upper
+Port3_Upper
+```
+
+## Performance
+
+Tech has the highest average return of 613 dollars above the initial 100,000 dollars. Sector ETFs also had a positive average return of 468.3 dollars while C&PB had an average negative return of 795.48 dollars. 
+
+The VaR for each portfolio was 93,873.05, 91,606.53 and 92,976.33 dollars for Tech, Sector ETFS and C&PB respectively. Given the left tail for C&PB it is unsurprising that it has the lowest VaR, by far. Tech has the best VaR - which would be the preferable portfolio for a risk averse person. 
+
+Conversley, comparing the upper 95% simulated quantile shows Sector EFTs  has the highest upside with a return of 8,480.40 dollars, second is Tech with 7,440.20  dollars. C&PB has the lowest return at the 95% quintile of 7,227.50 dollars.
+
+## Conclusion
+
+Given Tech has the highest VaR and average return, a risk averse person should invest in this portfolio. For a risk seeker, they may try the Sector ETFs portfolio which has the highest variance and highest potential upside. The C&PB portfolio is the riskiest and more volatile out of the 3, there's even a chance of losing more than 25% of it's value during the analyzed period. 
