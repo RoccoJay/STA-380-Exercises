@@ -15,13 +15,13 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## Method
 
-* Read the files from different folders based on author name from the folder name
+* Read the files from different folders based on author name 
 * Created a vector using each document from all folders
 * Created the corpus, a text mining document from the above vector
 * Created bag of words by removing all stopwords, punctuation and excess white spaces
-* Created a document term matrix that comprises columns with all terms written in the documents and each row being by document
+* Created a document term matrix that comprises columns with all terms written in the documents and each row representing a document
 * Ran Naïve-Bayes by removing sparse terms and kept the terms that were in the training set and removed any words not in the training set from the test set
-* Predict accuracy of author attribution on test set with approx. 33% accuracy
+* Predicted accuracy of author attribution on test set with approximately 33% accuracy
 * Ran Random Forest using the same dataframes as previously, but needed to add suffixes to the term names so there isn’t any conflict with R internal variable names
 * Ran Random Forest using the Random Forest library with 1,000 trees and m = 5
 * Cross-validated using k=
