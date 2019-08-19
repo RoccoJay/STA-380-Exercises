@@ -260,7 +260,7 @@ lift and support. The last plot takes order number into account.
 The analysis showed that whole milk and other vegetables have very high
 betweeness.
 
-![](Old%20Versions/ARM_Groceries_files/Untitled.png)<!-- -->
+![](Final_WIP_files/Untitled.png)<!-- -->
 
 ## Rules at various thresholds
 
@@ -280,7 +280,7 @@ are:
 |    9 | {root vegetables,tropical fruit,whole milk} =\> {yogurt}           | 3.401937 |
 |   10 | {citrus fruit,root vegetables,whole milk} =\> {other vegetables}   | 3.273165 |
 
-![](Old%20Versions/ARM_Groceries_files/10.4.png)<!-- -->
+![](Final_WIP_files/10.4.png)<!-- -->
 
 If we lower the confidence threshold to 0.1, the top 10 rules
 are:
@@ -298,7 +298,7 @@ are:
 |    9 | {whipped/sour cream} =\> {berries}                                 | 3.796886 |
 |   10 | {other vegetables,tropical fruit,whole milk} =\> {root vegetables} | 3.768074 |
 
-![](Old%20Versions/ARM_Groceries_files/10.1.png)<!-- -->
+![](Final_WIP_files/10.1.png)<!-- -->
 
 Here is a graph of the rules with a lift of higher than 3.5:
 
