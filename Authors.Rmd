@@ -1,32 +1,43 @@
-rm(list =ls())
+---
+title: "ReutersC50"
+author: "SebastianOsorio"
+date: "18/8/2019"
+output: html_document
+---
 
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
 library(tm) 
 library(magrittr)
 library(slam)
 library(proxy)
-#library(RTextTools)
 library(e1071)
 library(dplyr)
 library(caret)
 library(naivebayes)
-# Library for parallel processing
-#library(doMC)
-#registerDoMC(cores=detectCores())  # Use all available cores
 
+```
 
-setwd('C:/Users/pivo/Desktop/UT MSBA/Summer 2019/Predictive Models/STA380')
+```{r}
+## This wraps another function around readPlain to read
+## plain text documents in English.
 readerPlain = function(fname){
   readPlain(elem=list(content=readLines(fname)), 
             id=fname, language='en') }
+```
 
-authors_train = Sys.glob('C:/Users/pivo/Desktop/UT MSBA/Summer 2019/Predictive Models/STA380/data/ReutersC50/C50train/*')
+```{r}
+authors_train = Sys.glob('./ReutersC50/C50train/*')
 file_list_train = NULL
 labels_train = NULL
 
 for(author in authors_train) {
   files_to_add = Sys.glob(paste0(author, '/*.txt'))
   file_list_train = append(file_list_train, files_to_add)
-  author_name = substring(author, first=93)
+  author_name = substring(author, first=23)
   labels_train = append(labels_train, rep(author_name, length(files_to_add)))
 }
 
@@ -37,24 +48,22 @@ mynames = file_list_train %>%
   { lapply(., paste0, collapse = '') } %>%
   unlist
 
-
-
 # Rename the articles
 mynames
 names(train) = mynames
 
+```
 
+```{r}
 
-#labels_train
-
-authors_test = Sys.glob('C:/Users/pivo/Desktop/UT MSBA/Summer 2019/Predictive Models/STA380/data/ReutersC50/C50test/*')
+authors_test = Sys.glob('./ReutersC50/C50test/*')
 file_list_test = NULL
 labels_test = NULL
 
 for(author in authors_test) {
   files_to_add_test = Sys.glob(paste0(author, '/*.txt'))
   file_list_test = append(file_list_test, files_to_add_test)
-  author_name_test = substring(author, first=92)
+  author_name_test = substring(author, first=22)
   labels_test = append(labels_test, rep(author_name_test, length(files_to_add_test)))
 }
 test = lapply(file_list_test, readerPlain) 
@@ -63,10 +72,9 @@ mynames = file_list_test %>%
   { lapply(., tail, n=2) } %>%
   { lapply(., paste0, collapse = '') } %>%
   unlist
-#labels_test
 
-
-
+```
+```{r}
 ## once you have documents in a vector, you 
 ## create a text mining 'corpus' with: 
 documents_raw = Corpus(VectorSource(train))
@@ -92,8 +100,9 @@ my_documents_test = tm_map(my_documents_test, content_transformer(removeWords), 
 ## create a doc-term-matrix
 DTM_train = DocumentTermMatrix(my_documents)
 DTM_test = DocumentTermMatrix(my_documents_test)
+```
 
-
+```{r}
 #### NAIVE BAYES:
 
 DTM_train <- removeSparseTerms(DTM_train, 0.91)
@@ -114,8 +123,11 @@ classifier <-  naive_bayes(train, train_Y, laplace = 1)
 pred <- predict(classifier, test, type = 'class')
 pred_tab <- table("Predictions"= pred,  "Actual" = labels_test)
 NB_r <- sum(diag(pred_tab))/sum(pred_tab)
+```
 
+	
 
+```{r}
 ### Random Forest:
 library(randomForest)
 DTM_train = DocumentTermMatrix(my_documents)
@@ -132,6 +144,10 @@ colnames(test_rf) <- paste(colnames(test), "_c", sep = "")
 
 ntr<-c(500)   #c(200,500,1000)
 max_acc=0
+```
+	
+
+```{r}
 
 # Training model with different number of trees and splits to get the optimal values for each
 for (n in ntr){
@@ -160,4 +176,8 @@ pred_rf <- predict(model_rf, test_rf, type = 'class')
 pred_tab_rf <- table("Predictions"= pred_rf,  "Actual" = labels_test)
 rf_r <- sum(diag(pred_tab_rf))/sum(pred_tab_rf)
 rf_r
+
+```
+	
+
 
