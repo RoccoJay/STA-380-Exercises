@@ -9,7 +9,7 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-```{r}
+```{r, include=FALSE}
 library(tm) 
 library(magrittr)
 library(slam)
@@ -21,7 +21,7 @@ library(naivebayes)
 
 ```
 
-```{r}
+```{r, include=FALSE}
 ## This wraps another function around readPlain to read
 ## plain text documents in English.
 readerPlain = function(fname){
@@ -29,7 +29,7 @@ readerPlain = function(fname){
             id=fname, language='en') }
 ```
 
-```{r}
+```{r, include=FALSE}
 authors_train = Sys.glob('./ReutersC50/C50train/*')
 file_list_train = NULL
 labels_train = NULL
@@ -54,7 +54,7 @@ names(train) = mynames
 
 ```
 
-```{r}
+```{r, include=FALSE}
 
 authors_test = Sys.glob('./ReutersC50/C50test/*')
 file_list_test = NULL
@@ -102,7 +102,7 @@ DTM_train = DocumentTermMatrix(my_documents)
 DTM_test = DocumentTermMatrix(my_documents_test)
 ```
 
-```{r}
+```{r, include=FALSE}
 #### NAIVE BAYES:
 
 DTM_train <- removeSparseTerms(DTM_train, 0.91)
@@ -127,7 +127,7 @@ NB_r <- sum(diag(pred_tab))/sum(pred_tab)
 
 	
 
-```{r}
+```{r, include=FALSE}
 ### Random Forest:
 library(randomForest)
 DTM_train = DocumentTermMatrix(my_documents)
@@ -142,34 +142,10 @@ colnames(train_df) <- paste(colnames(train_df), "_c", sep = "")
 test_rf <- test
 colnames(test_rf) <- paste(colnames(test), "_c", sep = "")
 
-ntr<-c(500)   #c(200,500,1000)
-max_acc=0
 ```
 	
 
-```{r}
-
-# Training model with different number of trees and splits to get the optimal values for each
-for (n in ntr){
-  a=c()
-  i=5
-  for (i in 5:20) {
-    model_rf <- randomForest(train_Y_c ~ . ,data=train_df, ntree = n, mtry = i, importance = TRUE)
-    predValid <- predict(model_rf, test_rf, type = "class")
-    a[i-2] = mean(predValid == labels_test)
-    if (a[i-2]>max_acc){
-      max_acc=a[i-2]
-      opt_tree=n
-      opt_m=i
-    }
-  }
-  print(paste0('Number of trees: ',n))
-  print(a)
-}
-
-model_rf <-randomForest(train_Y_c ~ . ,data=train_df,ntree=opt_tree,mtry=opt_m,importance=TRUE)
-
-
+```{r, include=FALSE}
 model_rf <- randomForest(train_Y_c ~ . ,data=train_df, ntree=1000, mtry = 20) # Non cv
 pred_rf <- predict(model_rf, test_rf, type = 'class')
 
